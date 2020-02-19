@@ -40,7 +40,7 @@
     position: relative;
     height: 100%;
     width: 100%;
-    transition: left 0.5s ease-out, transform 0.5s ease-out;
+    transition: left 0.5s ease-in-out, transform 0.4s ease-in-out;
     background-color: #000;
   }
   .banner .slider_item {
@@ -74,7 +74,7 @@
     border-radius: 66px;
     font-size: 30px;
     color: #fff;
-    transition: background-color 0.3s ease-out;
+    transition: background-color 0.3s ease-in-out;
   }
   .banner .sliderControl_btn:hover {
     background-color: #fc6060;
@@ -115,7 +115,7 @@
     background-color: #fc6060;
     width: 0;
     height: 3px;
-    transition: width 0.5s;
+    transition: width 0.4s ease-in-out;
   }
   .categoryControl_item.is_active:after {
     width: 100%;
@@ -127,19 +127,66 @@
     line-height: 0;
   }
   .categoryBox_item {
+    position: relative;
+    overflow: hidden;
     display: inline-block;
-    width: 25%;
-    padding: 0 15px;
-    margin-bottom: 30px;
+    width: calc(25% - 30px);
+    margin: 0 15px;
     font-size: 20px;
     font-weight: 600;
-    transition: transform 0.8s, left 0.5s, top 0.5s;
+    transition: transform 0.35s ease-in-out, left 0.3s ease-in-out, top 0.3s ease-in-out;
     box-sizing: border-box;
+  }
+  .categoryBox_item:after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transition: background-color 0.4s ease-in-out;
   }
   .categoryBox_itemImg {
     width: 100%;
     padding-bottom: 60%;
+    background: no-repeat center;
     background-size: cover;
+    transition: transform 0.4s ease-in-out;
+  }
+  .categoryBox_item:hover:after {
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+  .categoryBox_item:hover .categoryBox_itemImg {
+    transform: scale(1.2);
+  }
+  .categoryBox_itemTextBox {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    padding: 20px;
+    opacity: 0;
+    z-index: 10;
+    box-sizing: border-box;
+    transition: opacity 0.4s ease-in-out;
+  }
+  .categoryBox_item:hover .categoryBox_itemTextBox {
+    opacity: 1;
+  }
+  .categoryBox_itemTitle {
+    color: #fff;
+    line-height: 18px;
+    font-size: 15px;
+    font-weight: 400;
+  }
+  .categoryBox_itemDescription {
+    color: #fff;
+    line-height: 18px;
+    font-size: 13px;
+    font-weight: 400;
+    margin-top: 10px;
   }
   /* // category */
 </style>
@@ -172,45 +219,143 @@
 </div>
 <div class="category">
   <div class="categoryControl">
-    <button class="categoryControl_item is_active" data-category="all">All</button>
-    <button class="categoryControl_item" data-category="human">Human</button>
-    <button class="categoryControl_item" data-category="nature">Nature</button>
-    <button class="categoryControl_item" data-category="contry">Country</button>
-    <button class="categoryControl_item" data-category="video">Video</button>
+    <button class="categoryControl_item is_active" data-category="all">ALL</button>
+    <button class="categoryControl_item" data-category="responsive">Responsive</button>
+    <button class="categoryControl_item" data-category="webaccessibility">Web Accessibility</button>
+    <button class="categoryControl_item" data-category="parallax">Parallax</button>
+    <button class="categoryControl_item" data-category="study">Study</button>
   </div>
   <div class="categoryBox">
-    <div class="categoryBox_item" data-category="human">
-      <div class="categoryBox_itemImg" data-size="1" style="background-image: url(./img/banner_1.jpg);">human</div>
-    </div>
-    <div class="categoryBox_item" data-category="contry">
-      <div class="categoryBox_itemImg" data-size="2" style="background-image: url(./img/banner_2.jpg);">contry</div>
-    </div>
-    <div class="categoryBox_item" data-category="nature">
-      <div class="categoryBox_itemImg" data-size="1" style="background-image: url(./img/banner_3.jpg);">nature</div>
-    </div>
-    <div class="categoryBox_item" data-category="video">
-      <div class="categoryBox_itemImg" data-size="2" style="background-image: url(./img/banner_1.jpg);">video</div>
-    </div>
-    <div class="categoryBox_item" data-category="nature">
-      <div class="categoryBox_itemImg" data-size="2" style="background-image: url(./img/banner_2.jpg);">nature</div>
-    </div>
-    <div class="categoryBox_item" data-category="nature">
-      <div class="categoryBox_itemImg" data-size="3" style="background-image: url(./img/banner_3.jpg);">nature</div>
-    </div>
-    <div class="categoryBox_item" data-category="contry">
-      <div class="categoryBox_itemImg" data-size="2" style="background-image: url(./img/banner_1.jpg);">contry</div>
-    </div>
-    <div class="categoryBox_item" data-category="human">
-      <div class="categoryBox_itemImg" data-size="1" style="background-image: url(./img/banner_2.jpg);">human</div>
-    </div>
-    <div class="categoryBox_item" data-category="nature">
-      <div class="categoryBox_itemImg" data-size="3" style="background-image: url(./img/banner_3.jpg);">nature</div>
-    </div>
-    <div class="categoryBox_item" data-category="human">
-      <div class="categoryBox_itemImg" data-size="1" style="background-image: url(./img/banner_1.jpg);">human</div>
-    </div>
-    <div class="categoryBox_item" data-category="human">
-      <div class="categoryBox_itemImg" data-size="3" style="background-image: url(./img/banner_2.jpg);">human</div>
-    </div>
+    <a class="categoryBox_item" data-category="webaccessibility,responsive" href="#">
+      <div class="categoryBox_itemImg" data-size="1" style="background-image: url(./img/banner_theme.png);"></div>
+      <div class="categoryBox_itemTextBox">
+        <strong class="categoryBox_itemTitle">SAMSUNG SDS</strong>
+        <p class="categoryBox_itemDescription">
+          #반응형 #접근성<br>
+          2017 접근성 마크 취득<br>
+          2018,2019 접근성 마크 갱신 메인작업자<br>
+        </p>
+      </div>
+    </a>
+    <a class="categoryBox_item" data-category="responsive" href="#">
+      <div class="categoryBox_itemImg" data-size="2" style="background-image: url(./img/banner_pgl.png);"></div>
+      <div class="categoryBox_itemTextBox">
+        <strong class="categoryBox_itemTitle">웬지 - 핸드메이드 클래스 & 마켓</strong>
+        <p class="categoryBox_itemDescription">
+          #프로젝트리딩 #반응형<br>
+          PL역할<br>
+          250페이지 분량<br>
+          2인 구성 메인 작업자<br>
+        </p>
+      </div>
+    </a>
+    <a class="categoryBox_item" data-category="responsive,parallax" href="#">
+      <div class="categoryBox_itemImg" data-size="1" style="background-image: url(./img/banner_remote.png);"></div>
+      <div class="categoryBox_itemTextBox">
+        <strong class="categoryBox_itemTitle">COOKEVER - 핸드메이드 클래스 & 마켓</strong>
+        <p class="categoryBox_itemDescription">
+          #프로젝트리딩 #반응형<br>
+          PL역할<br>
+          250페이지 분량<br>
+          2인 구성 메인 작업자<br>
+        </p>
+      </div>
+    </a>
+    <a class="categoryBox_item" data-category="study" href="#">
+      <div class="categoryBox_itemImg" data-size="2" style="background-image: url(./img/banner_sds.png);"></div>
+      <div class="categoryBox_itemTextBox">
+        <strong class="categoryBox_itemTitle">COOKEVER - 핸드메이드 클래스 & 마켓</strong>
+        <p class="categoryBox_itemDescription">
+          #프로젝트리딩 #반응형<br>
+          PL역할<br>
+          250페이지 분량<br>
+          2인 구성 메인 작업자<br>
+        </p>
+      </div>
+    </a>
+    <a class="categoryBox_item" data-category="responsive,parallax" href="#">
+      <div class="categoryBox_itemImg" data-size="2" style="background-image: url(./img/banner_wenzi.png);"></div>
+      <div class="categoryBox_itemTextBox">
+        <strong class="categoryBox_itemTitle">웬지 - 핸드메이드 클래스 & 마켓</strong>
+        <p class="categoryBox_itemDescription">
+          #프로젝트리딩 #반응형<br>
+          PL역할<br>
+          250페이지 분량<br>
+          2인 구성 메인 작업자<br>
+        </p>
+      </div>
+    </a>
+    <a class="categoryBox_item" data-category="study" href="#">
+      <div class="categoryBox_itemImg" data-size="3" style="background-image: url(./img/banner_todo.png);"></div>
+      <div class="categoryBox_itemTextBox">
+        <strong class="categoryBox_itemTitle">웬지 - 핸드메이드 클래스 & 마켓</strong>
+        <p class="categoryBox_itemDescription">
+          #프로젝트리딩 #반응형<br>
+          PL역할<br>
+          250페이지 분량<br>
+          2인 구성 메인 작업자<br>
+        </p>
+      </div>
+    </a>
+    <a class="categoryBox_item" data-category="responsive" href="#">
+      <div class="categoryBox_itemImg" data-size="2" style="background-image: url(./img/banner_cookever.png);"></div>
+      <div class="categoryBox_itemTextBox">
+        <strong class="categoryBox_itemTitle">SAMSUNG SDS</strong>
+        <p class="categoryBox_itemDescription">
+          #반응형 #접근성<br>
+          2017 접근성 마크 취득<br>
+          2018,2019 접근성 마크 갱신 메인작업자<br>
+        </p>
+      </div>
+    </a>
+    <a class="categoryBox_item" data-category="responsive,parallax" href="#">
+      <div class="categoryBox_itemImg" data-size="1" style="background-image: url(./img/banner_vr.png);"></div>
+      <div class="categoryBox_itemTextBox">
+        <strong class="categoryBox_itemTitle">웬지 - 핸드메이드 클래스 & 마켓</strong>
+        <p class="categoryBox_itemDescription">
+          #프로젝트리딩 #반응형<br>
+          PL역할<br>
+          250페이지 분량<br>
+          2인 구성 메인 작업자<br>
+        </p>
+      </div>
+    </a>
+    <a class="categoryBox_item" data-category="responsive" href="#">
+      <div class="categoryBox_itemImg" data-size="3" style="background-image: url(./img/banner_eye.png);"></div>
+      <div class="categoryBox_itemTextBox">
+        <strong class="categoryBox_itemTitle">웬지 - 핸드메이드 클래스 & 마켓</strong>
+        <p class="categoryBox_itemDescription">
+          #프로젝트리딩 #반응형<br>
+          PL역할<br>
+          250페이지 분량<br>
+          2인 구성 메인 작업자<br>
+        </p>
+      </div>
+    </a>
+    <a class="categoryBox_item" data-category="responsive,parallax" href="#">
+      <div class="categoryBox_itemImg" data-size="1" style="background-image: url(./img/banner_things.png);"></div>
+      <div class="categoryBox_itemTextBox">
+        <strong class="categoryBox_itemTitle">웬지 - 핸드메이드 클래스 & 마켓</strong>
+        <p class="categoryBox_itemDescription">
+          #프로젝트리딩 #반응형<br>
+          PL역할<br>
+          250페이지 분량<br>
+          2인 구성 메인 작업자<br>
+        </p>
+      </div>
+    </a>
+    <a class="categoryBox_item" data-category="responsive" href="#">
+      <div class="categoryBox_itemImg" data-size="3" data-wide=true style="background-image: url(./img/banner_smartTable.png);"></div>
+      <div class="categoryBox_itemTextBox">
+        <strong class="categoryBox_itemTitle">웬지 - 핸드메이드 클래스 & 마켓</strong>
+        <p class="categoryBox_itemDescription">
+          #프로젝트리딩 #반응형<br>
+          PL역할<br>
+          250페이지 분량<br>
+          2인 구성 메인 작업자<br>
+        </p>
+      </div>
+    </a>
+    <div class="categoryBox_item" data-category=""></div>
   </div>
 </div>

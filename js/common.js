@@ -79,6 +79,9 @@ addEventListener('DOMContentLoaded', function(){
     for (let i = 0; i < slider.sliderData.length; i++) {
       slider.resize(i);
     }
+    for (let i = 0; i < category.categoryData.length; i++) {
+      category.positioning(i);
+    }
   });
 
   window.addEventListener('scroll', function (e) {
@@ -313,18 +316,24 @@ addEventListener('DOMContentLoaded', function(){
           categoryData['categoryControl_itemAll'] = categoryData['categoryControl'].querySelectorAll('.categoryControl_item');
           categoryData['categoryControl_itemAll'].forEach(function (value, clickIndex) {
             value.addEventListener('click', function (e) {
+              self.sizeChack(categoryIndex, value.getAttribute('data-category'));
               self.changeMenu(categoryIndex, clickIndex);
               self.changeList(categoryIndex);
               self.positioning(categoryIndex);
+              self.transitionStart(categoryIndex);
             });
           });
           categoryData['categoryBox'] = categoryData['category'].querySelector('.categoryBox');
           categoryData['categoryBox_itemAll'] = categoryData['categoryBox'].querySelectorAll('.categoryBox_item');
           self.categoryData[categoryIndex] = categoryData;
-          self.sizeChack(categoryIndex);
+          self.sizeChack(categoryIndex, 'all');
         });
       }
     },
+    // transitionStart : function (categoryIndex) {
+    //   var self = this;
+    //   var categoryData = self.categoryData[categoryIndex];
+    // },
     changeMenu : function (categoryIndex, clickIndex) {
       var self = this;
       var categoryData = self.categoryData[categoryIndex];
@@ -340,28 +349,67 @@ addEventListener('DOMContentLoaded', function(){
       var categoryData = self.categoryData[categoryIndex];
       var nowCategory = categoryData['nowCategory'];
       categoryData['categoryBox_itemAll'].forEach(function (value, index) {
+        var haveCategoryList = value.getAttribute('data-category').split(',');
         value.classRemove('is_transitionHide');
-        if (nowCategory != 'all' && value.getAttribute('data-category') != nowCategory) {
-          value.classAdd('is_transitionHide');
+        if (nowCategory != 'all') {
+          var haveCategory = false;
+          haveCategoryList.forEach(function (value, index) {
+            if (value == nowCategory) {
+              haveCategory = true;
+            }
+          });
+          if (haveCategory == false) {
+            value.classAdd('is_transitionHide');
+          }
         }
       });
     },
-    sizeChack : function (categoryIndex) {
+    sizeChack : function (categoryIndex, category) {
       var self = this;
       var categoryData = self.categoryData[categoryIndex];
       var nowCategory = categoryData['nowCategory'];
       var size_1 = '60%';
       var size_2 = 'calc(90% + 30px)';
       var size_3 = 'calc(150% + 60px)';
+      var size_w1 = 'calc(30% - 9px)';
+      var size_w2 = 'calc(45% + 16px)';
+      var size_w3 = 'calc(75% + 38px)';
+      var wideWith = 'calc(50% - 30px)';
       categoryData['categoryBox_itemAll'].forEach(function (value, index) {
         var categoryBox_itemImg = value.querySelector('.categoryBox_itemImg');
-        var dataSize = categoryBox_itemImg.getAttribute('data-size');
-        if (dataSize == 1) {
-          categoryBox_itemImg.style.paddingBottom = size_1;
-        } else if (dataSize == 2) {
-          categoryBox_itemImg.style.paddingBottom = size_2;
-        } else if (dataSize == 3) {
-          categoryBox_itemImg.style.paddingBottom = size_3;
+        if (categoryBox_itemImg) {
+          var dataSize = categoryBox_itemImg.getAttribute('data-size');
+          var dataWide = categoryBox_itemImg.getAttribute('data-wide');
+          if (category == 'all') {
+            if (dataSize == 1) {
+              if (dataWide) {
+                categoryBox_itemImg.style.paddingBottom = size_w1;
+                value.style.width = wideWith;
+              } else {
+                categoryBox_itemImg.style.paddingBottom = size_1;
+                value.style.width = '';
+              }
+            } else if (dataSize == 2) {
+              if (dataWide) {
+                categoryBox_itemImg.style.paddingBottom = size_w2;
+                value.style.width = wideWith;
+              } else {
+                categoryBox_itemImg.style.paddingBottom = size_2;
+                value.style.width = '';
+              }
+            } else if (dataSize == 3) {
+              if (dataWide) {
+                categoryBox_itemImg.style.paddingBottom = size_w3;
+                value.style.width = wideWith;
+              } else {
+                categoryBox_itemImg.style.paddingBottom = size_3;
+                value.style.width = '';
+              }
+            }
+          } else {
+            categoryBox_itemImg.style.paddingBottom = size_2;
+            value.style.width = '';
+          }
         }
       });
       self.positioning(categoryIndex);
