@@ -29,7 +29,6 @@
   }
   .bannerText_description {
     display: block;
-    width: 630px;
     line-height: 1.9;
     color: #ffffff;
     margin-bottom: 50px;
@@ -86,14 +85,42 @@
     right: 70px;
   }
   @media all and (max-width:1280px) {
+    .banner {
+      height: 700px;
+    }
     .bannerText {
-      width: 900px;
+      width: 100%;
+      padding: 0 80px;
+      box-sizing: border-box;
+    }
+    .bannerText_title {
+      font-size: 70px;
+    }
+    .bannerText_description {
+      font-size: 12px;
+    }
+  }
+  @media all and (max-width:768px) {
+    .banner {
+      height: 400px;
+    }
+    .bannerText {
+      top: 55%;
+      padding: 0 30px;
+    }
+    .bannerText_title {
+      font-size: 45px;
+    }
+    .bannerText_description {
+      font-size: 10px;
     }
   }
   /* // banner */
 
   /* category */
   .category {
+    margin: auto;
+    max-width: 1280px;
     background-color: #fff;
     padding: 80px 5%;
   }
@@ -188,6 +215,28 @@
     font-weight: 400;
     margin-top: 10px;
   }
+  @media all and (max-width:1024px) {
+    .categoryControl_item {
+      font-size: 16px;
+      margin: 0 15px;
+    }
+  }
+  @media all and (max-width: 768px) {
+    .category {
+      padding: 40px 20px;
+    }
+    .categoryBox {
+      margin-bottom: 0;
+    }
+    .categoryBox_item {
+      width: 100%;
+      margin: 0;
+      transition: none;
+    }
+    .categoryBox_item {
+      margin-bottom: 30px;
+    }
+  }
   /* // category */
 </style>
 
@@ -198,8 +247,7 @@
       I'm JooHoon
     </strong>
     <p class="bannerText_description">
-      I'm a creative web developer.
-      I like to explore new ways.
+      I'm a creative web developer. I like to explore new ways.<br>
       Create what I want without following others.
     </p>
   </div>
@@ -208,14 +256,6 @@
     <li class="slider_item" style="background-image: url(./img/banner_2.jpg);"></li>
     <li class="slider_item" style="background-image: url(./img/banner_3.jpg);"></li>
   </ul>
-  <div class="sliderControl">
-    <button class="sliderControl_btn ti-arrow-left is_prev">
-      <span class="is_blind">Prev</span>
-    </button>
-    <button class="sliderControl_btn ti-arrow-right is_next">
-      <span class="is_blind">Next</span>
-    </button>
-  </div>
 </div>
 <div class="category">
   <div class="categoryControl">
@@ -226,7 +266,7 @@
     <button class="categoryControl_item" data-category="study">Study</button>
   </div>
   <div class="categoryBox">
-    <a class="categoryBox_item" data-category="webaccessibility,responsive" href="#">
+    <a class="categoryBox_item" data-category="responsive" href="#">
       <div class="categoryBox_itemImg" data-size="1" style="background-image: url(./img/banner_theme.png);"></div>
       <div class="categoryBox_itemTextBox">
         <strong class="categoryBox_itemTitle">SAMSUNG SDS</strong>
@@ -237,7 +277,7 @@
         </p>
       </div>
     </a>
-    <a class="categoryBox_item" data-category="responsive" href="#">
+    <a class="categoryBox_item" data-category="responsive,parallax" href="#">
       <div class="categoryBox_itemImg" data-size="2" style="background-image: url(./img/banner_pgl.png);"></div>
       <div class="categoryBox_itemTextBox">
         <strong class="categoryBox_itemTitle">웬지 - 핸드메이드 클래스 & 마켓</strong>
@@ -249,7 +289,7 @@
         </p>
       </div>
     </a>
-    <a class="categoryBox_item" data-category="responsive,parallax" href="#">
+    <a class="categoryBox_item" data-category="responsive" href="#">
       <div class="categoryBox_itemImg" data-size="1" style="background-image: url(./img/banner_remote.png);"></div>
       <div class="categoryBox_itemTextBox">
         <strong class="categoryBox_itemTitle">COOKEVER - 핸드메이드 클래스 & 마켓</strong>
@@ -261,7 +301,7 @@
         </p>
       </div>
     </a>
-    <a class="categoryBox_item" data-category="study" href="#">
+    <a class="categoryBox_item" data-category="responsive,webaccessibility" href="#">
       <div class="categoryBox_itemImg" data-size="2" style="background-image: url(./img/banner_sds.png);"></div>
       <div class="categoryBox_itemTextBox">
         <strong class="categoryBox_itemTitle">COOKEVER - 핸드메이드 클래스 & 마켓</strong>
@@ -273,7 +313,7 @@
         </p>
       </div>
     </a>
-    <a class="categoryBox_item" data-category="responsive,parallax" href="#">
+    <a class="categoryBox_item" data-category="responsive" href="#">
       <div class="categoryBox_itemImg" data-size="2" style="background-image: url(./img/banner_wenzi.png);"></div>
       <div class="categoryBox_itemTextBox">
         <strong class="categoryBox_itemTitle">웬지 - 핸드메이드 클래스 & 마켓</strong>
@@ -297,7 +337,7 @@
         </p>
       </div>
     </a>
-    <a class="categoryBox_item" data-category="responsive" href="#">
+    <a class="categoryBox_item" data-category="responsive,parallax" href="#">
       <div class="categoryBox_itemImg" data-size="2" style="background-image: url(./img/banner_cookever.png);"></div>
       <div class="categoryBox_itemTextBox">
         <strong class="categoryBox_itemTitle">SAMSUNG SDS</strong>
@@ -308,7 +348,7 @@
         </p>
       </div>
     </a>
-    <a class="categoryBox_item" data-category="responsive,parallax" href="#">
+    <a class="categoryBox_item" data-category="responsive" href="#">
       <div class="categoryBox_itemImg" data-size="1" style="background-image: url(./img/banner_vr.png);"></div>
       <div class="categoryBox_itemTextBox">
         <strong class="categoryBox_itemTitle">웬지 - 핸드메이드 클래스 & 마켓</strong>
@@ -320,7 +360,7 @@
         </p>
       </div>
     </a>
-    <a class="categoryBox_item" data-category="responsive" href="#">
+    <a class="categoryBox_item" data-category="study" href="#">
       <div class="categoryBox_itemImg" data-size="3" style="background-image: url(./img/banner_eye.png);"></div>
       <div class="categoryBox_itemTextBox">
         <strong class="categoryBox_itemTitle">웬지 - 핸드메이드 클래스 & 마켓</strong>
@@ -332,7 +372,7 @@
         </p>
       </div>
     </a>
-    <a class="categoryBox_item" data-category="responsive,parallax" href="#">
+    <a class="categoryBox_item" data-category="responsive" href="#">
       <div class="categoryBox_itemImg" data-size="1" style="background-image: url(./img/banner_things.png);"></div>
       <div class="categoryBox_itemTextBox">
         <strong class="categoryBox_itemTitle">웬지 - 핸드메이드 클래스 & 마켓</strong>
@@ -344,7 +384,7 @@
         </p>
       </div>
     </a>
-    <a class="categoryBox_item" data-category="responsive" href="#">
+    <a class="categoryBox_item" data-category="study" href="#">
       <div class="categoryBox_itemImg" data-size="3" data-wide=true style="background-image: url(./img/banner_smartTable.png);"></div>
       <div class="categoryBox_itemTextBox">
         <strong class="categoryBox_itemTitle">웬지 - 핸드메이드 클래스 & 마켓</strong>

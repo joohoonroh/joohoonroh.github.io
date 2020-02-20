@@ -16,6 +16,10 @@ a:focus, button:focus {
 }
 .is_transitionHide {
   overflow: hidden;
+  width: 0 !important;
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
   transform: scale(0);
   -webkit-transform: scale(0);
   -moz-transform: scale(0);

@@ -10,6 +10,12 @@ addEventListener('DOMContentLoaded', function(){
       this.className = this.className.replace(' ' + input, '');
     }
   }
+  Object.prototype.windowWidth = function () {
+    return window.innerWidth;
+  }
+  // Object.prototype.transitionHideAdd = function (input) {
+  //   value.classRemove('is_transitionHide');
+  // }
 
   // htmlInclude - start
   var htmlInclude = {
@@ -80,7 +86,7 @@ addEventListener('DOMContentLoaded', function(){
       slider.resize(i);
     }
     for (let i = 0; i < category.categoryData.length; i++) {
-      category.positioning(i);
+      category.sizeChack(i);
     }
   });
 
@@ -316,24 +322,19 @@ addEventListener('DOMContentLoaded', function(){
           categoryData['categoryControl_itemAll'] = categoryData['categoryControl'].querySelectorAll('.categoryControl_item');
           categoryData['categoryControl_itemAll'].forEach(function (value, clickIndex) {
             value.addEventListener('click', function (e) {
-              self.sizeChack(categoryIndex, value.getAttribute('data-category'));
               self.changeMenu(categoryIndex, clickIndex);
+              self.sizeChack(categoryIndex);
               self.changeList(categoryIndex);
               self.positioning(categoryIndex);
-              self.transitionStart(categoryIndex);
             });
           });
           categoryData['categoryBox'] = categoryData['category'].querySelector('.categoryBox');
           categoryData['categoryBox_itemAll'] = categoryData['categoryBox'].querySelectorAll('.categoryBox_item');
           self.categoryData[categoryIndex] = categoryData;
-          self.sizeChack(categoryIndex, 'all');
+          self.sizeChack(categoryIndex);
         });
       }
     },
-    // transitionStart : function (categoryIndex) {
-    //   var self = this;
-    //   var categoryData = self.categoryData[categoryIndex];
-    // },
     changeMenu : function (categoryIndex, clickIndex) {
       var self = this;
       var categoryData = self.categoryData[categoryIndex];
@@ -364,7 +365,7 @@ addEventListener('DOMContentLoaded', function(){
         }
       });
     },
-    sizeChack : function (categoryIndex, category) {
+    sizeChack : function (categoryIndex) {
       var self = this;
       var categoryData = self.categoryData[categoryIndex];
       var nowCategory = categoryData['nowCategory'];
@@ -380,7 +381,7 @@ addEventListener('DOMContentLoaded', function(){
         if (categoryBox_itemImg) {
           var dataSize = categoryBox_itemImg.getAttribute('data-size');
           var dataWide = categoryBox_itemImg.getAttribute('data-wide');
-          if (category == 'all') {
+          if (nowCategory == 'all' && windowWidth() >= 768) {
             if (dataSize == 1) {
               if (dataWide) {
                 categoryBox_itemImg.style.paddingBottom = size_w1;
@@ -420,34 +421,43 @@ addEventListener('DOMContentLoaded', function(){
       var maxHeight = 0;
       var nowCategoryBox_item = categoryData['categoryBox'].querySelectorAll('.categoryBox_item:not(.is_transitionHide)');
       categoryData['categoryBox'].style.height = '';
-      categoryData['categoryBox_itemAll'].forEach(function (value, index) {
-        value.style.zIndex = '';
-      });
-      nowCategoryBox_item.forEach(function (value, index) {
-        value.style.position = 'absolute';
-        var col = parseInt(index / 4);
-        var chackHeight = 0;
-        var chackMaxHeight = 0;
-        value.style.zIndex = '10';
-        if (index % 4 == 0) {
-          value.style.left = '0';
-        } else if (index % 4 == 1) {
-          value.style.left = '25%';
-        } else if (index % 4 == 2) {
-          value.style.left = '50%';
-        } else if (index % 4 == 3) {
-          value.style.left = '75%';
-        }
-        for (var i = 1; i <= col; i++) {
-          chackHeight += nowCategoryBox_item[index - 4 * i].offsetHeight + 30;
-        }
-        chackMaxHeight = chackHeight + nowCategoryBox_item[index].offsetHeight;
-        value.style.top = chackHeight + 'px';
-        if (maxHeight < chackMaxHeight) {
-          maxHeight = chackMaxHeight;
-        }
-      });
-      categoryData['categoryBox'].style.height = maxHeight + 'px';
+      if (windowWidth() < 768) {
+        categoryData['categoryBox_itemAll'].forEach(function (value, index) {
+          value.style.zIndex = '';
+          value.style.top = '';
+          value.style.left = '';
+          value.style.position = '';
+        });
+      } else {
+        categoryData['categoryBox_itemAll'].forEach(function (value, index) {
+          value.style.zIndex = '';
+        });
+        nowCategoryBox_item.forEach(function (value, index) {
+          var col = parseInt(index / 4);
+          var chackHeight = 0;
+          var chackMaxHeight = 0;
+          value.style.zIndex = '10';
+          value.style.position = 'absolute';
+          if (index % 4 == 0) {
+            value.style.left = '0';
+          } else if (index % 4 == 1) {
+            value.style.left = '25%';
+          } else if (index % 4 == 2) {
+            value.style.left = '50%';
+          } else if (index % 4 == 3) {
+            value.style.left = '75%';
+          }
+          for (var i = 1; i <= col; i++) {
+            chackHeight += nowCategoryBox_item[index - 4 * i].offsetHeight + 30;
+          }
+          chackMaxHeight = chackHeight + nowCategoryBox_item[index].offsetHeight;
+          value.style.top = chackHeight + 'px';
+          if (maxHeight < chackMaxHeight) {
+            maxHeight = chackMaxHeight;
+          }
+        });
+        categoryData['categoryBox'].style.height = maxHeight + 'px';
+      }
     }
 
   }
