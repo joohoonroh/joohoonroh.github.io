@@ -1,14 +1,31 @@
 addEventListener('DOMContentLoaded', function(){
 
+  // classList ie 대응
   Object.prototype.classAdd = function (input) {
     if (this.className.split(input).length == 1) {
       this.className = this.className + ' ' + input;
+      this.className = this.className.replace('  ', ' ');
     }
   }
   Object.prototype.classRemove = function (input) {
     if (this.className.split(input).length != 1) {
-      this.className = this.className.replace(' ' + input, '');
+      this.className = this.className.replace(input, '').replace('  ', ' ');
     }
+  }
+  Object.prototype.classToggle = function (input) {
+    if (this.className.split(input).length == 1) {
+      this.classAdd(input);
+    } else {
+      this.classRemove(input);
+    }
+  }
+  Object.prototype.addEvent = function (event, func) {
+    var self = this;
+    event.replace(' ','').split(',').forEach(function (value, index) {
+      self.addEventListener(value, function (e) {
+        func(e);
+      });
+    });
   }
   Object.prototype.windowWidth = function () {
     return window.innerWidth;
@@ -65,8 +82,7 @@ addEventListener('DOMContentLoaded', function(){
     complete : function () {
       // 최초 실행시 동작
       this.gotoPage();
-      header.changeNav();
-      header.positionCheck();
+      header.init();
 
       // 페이지 이동시 추가
       this.reload();
@@ -92,7 +108,7 @@ addEventListener('DOMContentLoaded', function(){
 
   window.addEventListener('scroll', function (e) {
     // 스크롤시 동작
-    header.positionCheck();
+    header.scrollCheck();
   });
 
   window.addEventListener('keydown', function (e) {
@@ -115,7 +131,12 @@ addEventListener('DOMContentLoaded', function(){
   // header - start
   var header = {
     item : [],
-    positionCheck : function () {
+    init : function (params) {
+      this.scrollCheck();
+      this.changeNav();
+      this.menuControll();
+    },
+    scrollCheck : function () {
       var header = document.querySelector('.header');
       if (window.scrollY || document.scrollTop) {
         if (!document.querySelector('.header.is_onScroll')) {
@@ -124,6 +145,22 @@ addEventListener('DOMContentLoaded', function(){
       } else {
         header.classRemove('is_onScroll');
       }
+    },
+    menuControll : function () {
+      var headerNav_menu = document.querySelector('.headerNav_menu');
+      var headerNav_itemAll = document.querySelectorAll('.headerNav_item');
+      var header_logoLink = document.querySelector('.header_logoLink');
+      headerNav_menu.addEventListener('click', function (e) {
+        document.querySelector('.header_wrap').classToggle('is_menuOpen');
+      })
+      header_logoLink.addEventListener('click', function (e) {
+        document.querySelector('.header_wrap').classRemove('is_menuOpen');
+      })
+      headerNav_itemAll.forEach(function (value, index) {
+        value.addEventListener('click', function (e) {
+          document.querySelector('.header_wrap').classRemove('is_menuOpen');
+        })
+      })
     },
     changeNav : function () {
       var self = this;
@@ -156,7 +193,7 @@ addEventListener('DOMContentLoaded', function(){
       });
     }
   }
-  header.positionCheck();
+  header.scrollCheck();
   // header - end
 
   // slider - start
@@ -271,11 +308,12 @@ addEventListener('DOMContentLoaded', function(){
       var mouseChack = false;
       var moveX = 0;
       var startX = 0;
-      sliderData['slider'].addEventListener('mousedown', function (e) {
+      // addEventListener 다수 이벤트 지원 불가하여 addEvent 메서드 생성
+      sliderData['slider'].addEvent('mousedown, touchstart', function (e) {
         mouseChack = true;
         sliderData['slider_list'].style.transition = 'transform 0s';
       });
-      sliderData['slider'].addEventListener('mouseup', function (e) {
+      sliderData['slider'].addEvent('mouseup, touchend', function (e) {
         if (moveX > 20) {
           self.pageMove('prev', sliderIndex);
         } else if (moveX < -20) {
@@ -287,19 +325,20 @@ addEventListener('DOMContentLoaded', function(){
         sliderData['slider_list'].style.transform = '';
         sliderData['slider_list'].style.transition = '';
       });
-      sliderData['slider'].addEventListener('mouseleave', function (e) {
+      sliderData['slider'].addEvent('mouseleave, touchcancel', function (e) {
         mouseChack = false;
         moveX = 0;
         startX = 0;
         sliderData['slider_list'].style.transform = '';
         sliderData['slider_list'].style.transition = '';
       });
-      sliderData['slider'].addEventListener('mousemove', function (e) {
+      sliderData['slider'].addEvent('mousemove, touchmove', function (e) {
         if (mouseChack) {
           if (!startX) {
-            startX = e.x;
+            // 이벤트에 따라 x값 분기처리
+            startX = (e.x) ? e.x : e.targetTouches[0].clientX;
           }
-          moveX = -(startX - e.x);
+          moveX = -(startX - ((e.x) ? e.x : e.targetTouches[0].clientX));
           sliderData['slider_list'].style.transform = 'translateX(' + moveX + 'px)';
         }
       });
