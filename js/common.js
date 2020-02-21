@@ -371,8 +371,26 @@ addEventListener('DOMContentLoaded', function(){
           categoryData['categoryBox_itemAll'] = categoryData['categoryBox'].querySelectorAll('.categoryBox_item');
           self.categoryData[categoryIndex] = categoryData;
           self.sizeChack(categoryIndex);
+          self.active(categoryIndex);
         });
       }
+    },
+    active : function (categoryIndex) {
+      var self = this;
+      var categoryData = self.categoryData[categoryIndex];
+      categoryData['categoryBox_itemAll'].forEach(function (value, clickIndex) {
+        value.addEventListener('click', function (e) {
+          categoryData['categoryBox_itemAll'].forEach(function (value, clickIndex) {
+            value.classRemove('is_active');
+          });
+          e.target.classAdd('is_active');
+        });
+        window.addEventListener('resize', function (e) {
+          categoryData['categoryBox_itemAll'].forEach(function (value, clickIndex) {
+            value.classRemove('is_active');
+          });
+        });
+      });
     },
     changeMenu : function (categoryIndex, clickIndex) {
       var self = this;
