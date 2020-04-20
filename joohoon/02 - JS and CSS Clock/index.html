@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>JS + CSS Clock</title>
+</head>
+<body>
+
+
+    <div class="clock">
+      <div class="clock-face">
+        <div class="hand hour-hand"></div>
+        <div class="hand min-hand"></div>
+        <div class="hand second-hand"></div>
+      </div>
+    </div>
+
+
+  <style>
+    html {
+      background: #018DED url(http://unsplash.it/1500/1000?image=881&blur=5);
+      background-size: cover;
+      font-family: 'helvetica neue';
+      text-align: center;
+      font-size: 10px;
+    }
+
+    body {
+      margin: 0;
+      font-size: 2rem;
+      display: flex;
+      flex: 1;
+      min-height: 100vh;
+      align-items: center;
+    }
+
+    .clock {
+      width: 30rem;
+      height: 30rem;
+      border: 20px solid white;
+      border-radius: 50%;
+      margin: 50px auto;
+      position: relative;
+      padding: 2rem;
+      box-shadow:
+        0 0 0 4px rgba(0,0,0,0.1),
+        inset 0 0 0 3px #EFEFEF,
+        inset 0 0 10px black,
+        0 0 10px rgba(0,0,0,0.2);
+    }
+
+    .clock-face {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transform: translateY(-3px); /* account for the height of the clock hands */
+    }
+
+    .hand {
+      width: 50%;
+      height: 6px;
+      background: black;
+      position: absolute;
+      top: 50%;
+      transform-origin: right;
+      transform: rotate();
+    }
+
+  </style>
+
+  <script>
+    const clock = {
+      // 성능 향상의 위한 선언부(init)와 동작부(setTime)의 분리
+      init : function () {
+        this.hourHand = document.querySelector('.hour-hand');
+        this.minHand = document.querySelector('.min-hand');
+        this.secondHand = document.querySelector('.second-hand');
+
+        // init 한번으로 clock의 모든 동작부를 실행하기 위해 init 내부에서 this.setTime() 호출
+        this.setTime();
+
+        // 혹시 모를 통제권을 위하여 setInterval사용하지 않음
+        const timeChack = () => {
+          setTimeout(() => {
+            this.setTime();
+            timeChack();
+          }, 30)
+        }
+        timeChack();
+
+        // 아래처럼 안하고 화살표 함수 사용해야만 하는 이유는 함수 내부 this의 스코프가 객체스코프로 변경되어버리기 때문에 this가 부모 객체를 유지하는 화살표 함수를 사용함
+        // const timeChack = function () {
+        //   window.setTimeout(function () {
+        //     this.setTime();
+        //     timeChack();
+        //   }, 30)
+        // }
+        // timeChack();
+
+        // es6를 사용할수 없는 환경이라 화살표 함수를 사용할 수 없다면 self 변수에 this를 담아두었다가 내부에서 활용 가능
+        // var self = this;
+        // var timeChack = function () {
+        //   window.setTimeout(function () {
+        //     self.setTime();
+        //     timeChack();
+        //   }, 30)
+        // }
+        // timeChack();
+
+      },
+      setTime : function () {
+        this.nowDate = new Date();
+        this.nowHour = this.nowDate.getHours();
+        this.nowMinutes = this.nowDate.getMinutes();
+        this.nowSeconds = this.nowDate.getSeconds();
+        this.nowMilliseconds = this.nowDate.getMilliseconds();
+        this.nowHour_angle = (this.nowHour / 24 * 360 + 90) % 360;
+        this.nowMinutes_angle = (this.nowMinutes / 60 * 360 + 90) % 360;
+        this.nowSeconds_angle = (this.nowSeconds / 60 * 360 + 90) % 360;
+        this.nowMilliseconds_angle = this.nowMilliseconds / 60 / 1000 * 360; // 무소음 시계
+
+        this.hourHand.style.transform = "rotate(" + this.nowHour_angle + "deg)";
+        this.minHand.style.transform = "rotate(" + this.nowMinutes_angle + "deg)";
+        this.secondHand.style.transform = "rotate(" + Number(this.nowSeconds_angle + this.nowMilliseconds_angle) + "deg)";
+      }
+    }
+    clock.init();
+
+  </script>
+</body>
+</html>
