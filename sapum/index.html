@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<title>Title</title>
+	<link rel="stylesheet" type="text/css" href="reset.css">
+	<style>
+		body {
+			padding: 24px;
+		}
+		.siteInfo {
+			margin-bottom: 16px;
+		}
+		.siteInfoItem {
+			position: relative;
+			font-size: 11px;
+			line-height: 14px;
+			color: #555555;
+			padding-left: 6px;
+			margin-bottom: 5px;
+		}
+		.siteInfoItem strong {
+			font-weight: bold;
+		}
+		.siteInfoItem:before {
+			content: "";
+			display: block;
+			position: absolute;
+			left: 0;
+			top: 5px;
+			width: 2px;
+			height: 2px;
+			border-radius: 10px;
+			background-color: #333333;
+		}
+		.dataSearch {
+			margin-top: 12px;
+		}
+		.mainTitle {
+			display: block;
+			color: #333;
+			font-size: 22px;
+			font-weight: bold;
+			margin-bottom: 16px;
+			text-align: left;
+		}
+		.myData {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			flex-direction: row;
+			flex-wrap: wrap;
+			padding: 20px 16px;
+			box-shadow: 0px 3px 15px 3px rgba(0, 0, 0, .07);
+			border-radius: 5px;
+			margin-bottom: 30px;
+		}
+		.myDataNoty {
+			flex: none;
+			display: block;
+			width: 100%;
+			font-size: 20px;
+			font-weight: bold;
+			text-align: center;
+		}
+		.myDataHeader {
+			flex: none;
+			width: 100%;
+			font-size: 20px;
+			font-weight: bold;
+			margin-bottom: 20px;
+		}
+		.myDataHeader .is_age {
+			display: inline-block;
+			font-size: 13px;
+			margin-left: 3px;
+		}
+		.myDataBody {
+			flex: none;
+			width: 100%;
+			font-size: 14px;
+		}
+		.myDataFooter {
+			flex: none;
+			width: 100%;
+			font-size: 14px;
+			margin-top: 20px;
+		}
+		.memberList {
+			width: 100%;
+			border: solid 1px #e5e5e5;
+			border-radius: 5px;
+		}
+		.memberListHead {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			background-color: #f0f0f0;
+			height: 32px;
+		}
+		.memberListHeadTitle {
+			flex: 1;
+			text-align: center;
+			font-size: 12px;
+			font-weight: bold;
+			min-width: 30px;
+		}
+		.memberListBody {
+			border-top: solid 1px #e5e5e5;
+		}
+		.memberListBodyItem {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			height: 32px;
+		}
+		.memberListBodyItem:nth-child(2n) {
+			background-color: #f9f9f9;
+		}
+		.memberListBodyItem.is_zero {
+			background-color: #e0ecf8;
+		}
+		.memberListBodyItem.is_zero:nth-child(2n) {
+			background-color: #d5e6f5;
+		}
+		.memberListBodyItem.is_one {
+			background-color: #ff9999;
+		}
+		.memberListBodyItem.is_two {
+			background-color: #ffaaaa;
+		}
+		.memberListBodyItem.is_three {
+			background-color: #ffbbbb;
+		}
+		.memberListBodyItem.is_four {
+			background-color: #ffcfcf;
+		}
+		.memberListBodyItem.is_five {
+			background-color: #ffdddd;
+		}
+		.memberListBodyData {
+			flex: 1;
+			font-size: 11px;
+			text-align: center;
+			min-width: 30px;
+		}
+	</style>
+</head>
+<body>
+	<h1 class="mainTitle">사진을 품다</h1>
+	<ul class="siteInfo">
+		<li class="siteInfoItem">
+			<strong>점수배점 :</strong> 출사 1회 2점, 후기작성 1회 1점
+		</li>
+		<li class="siteInfoItem">
+			<strong>우수회원 :</strong> 분기별 활동점수 1~5위(운영진 제외)를 선정하여 치킨 및 스타벅스 상품권을 지급합니다.
+		</li>
+		<li class="siteInfoItem">
+			<strong>회비 :</strong> 출사마다 1000원의 출사비를 받고 있으며, 소모임 프리미엄 등록비와 우수회원 선발비로 사용됩니다.
+		</li>
+	</ul>
+	<div class="myData">
+		<strong class="myDataNoty">이름 입력</strong>
+		<input type="text" class="dataSearch">
+	</div>
+	<div class="memberList">
+		<div class="memberListHead">
+			<strong class="memberListHeadTitle">이름</strong>
+			<strong class="memberListHeadTitle">참여일</strong>
+			<strong class="memberListHeadTitle">리뷰</strong>
+			<strong class="memberListHeadTitle">점수</strong>
+			<strong class="memberListHeadTitle">등수</strong>
+		</div>
+		<div class="memberListBody"></div>
+	</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+<script>
+	const allList = [];
+
+	$( document ).ready(function() {
+		getDataInit();
+	})
+
+	function getDataInit() {
+		$.ajax({
+			url: "https://spreadsheets.google.com/feeds/list/1tfCl96cw8emDFFs6NT37wKOrMnF4UYiDS3uuTHE93bQ/1/public/basic?alt=json",
+			type: "GET",
+			dataType: "JSON",
+			success: function(response){
+				let list = response.feed.entry;
+				let memberListHtml = "";
+				$(list).each(function(index, value){
+					const nowData = value.content.$t;
+					let nowObject = {
+						name: splitData(nowData, 'name: '), // 이름
+						age: splitData(nowData, 'age: '), // 나이
+						gender: splitData(nowData, 'gender: '), // 성별
+						birth: splitData(nowData, 'birth: '), // 생일
+						camera: splitData(nowData, 'camera: '), // 카메라
+						city: splitData(nowData, 'city: '), // 시
+						district: splitData(nowData, 'district: '), // 도
+						count: splitData(nowData, 'count: '), // 참여일
+						percent: splitData(nowData, 'percent: '), // 참여율
+						lastday: splitData(nowData, 'lastday: '), // 최근 출사
+						eapsedday: splitData(nowData, 'eapsedday: '), // 경과일
+						review: splitData(nowData, 'review: '), // 리뷰
+						point: splitData(nowData, 'point: '), // 점수
+						rank: splitData(nowData, 'rank: '), // 등수
+						remart: splitData(nowData, 'remart: '), // 비고
+					};
+					allList.push(nowObject);
+					if (nowObject.name) {
+						if (nowObject.rank == '운영진') {
+							memberListHtml += "<div class='memberListBodyItem is_zero'>";
+						} else if (nowObject.rank == 1) {
+							memberListHtml += "<div class='memberListBodyItem is_one'>";
+						} else if (nowObject.rank == 2) {
+							memberListHtml += "<div class='memberListBodyItem is_two'>";
+						} else if (nowObject.rank == 3) {
+							memberListHtml += "<div class='memberListBodyItem is_three'>";
+						} else if (nowObject.rank == 4) {
+							memberListHtml += "<div class='memberListBodyItem is_four'>";
+						} else if (nowObject.rank == 5) {
+							memberListHtml += "<div class='memberListBodyItem is_five'>";
+						} else {
+							memberListHtml += "<div class='memberListBodyItem'>";
+						}
+						memberListHtml +=
+							"<div class='memberListBodyData is_name'>" + nowObject.name + "</div>" +
+							"<div class='memberListBodyData is_count'>" + nowObject.count + "회</div>" +
+							"<div class='memberListBodyData is_review'>" + nowObject.review + "</div>" +
+							"<div class='memberListBodyData is_point'>" + nowObject.point + "</div>" +
+							"<div class='memberListBodyData is_rank'>" + nowObject.rank + "</div>" +
+							"</div>"
+					}
+				})
+				console.log(allList);
+				$('.memberListBody').html(memberListHtml);
+				$('.dataSearch').on('change', function (e) {
+					dataSearch(e.target.value);
+				})
+			}
+		});
+		
+		function splitData(target, data) {
+			const nowData = target.split(data)[1];
+			if (nowData) {
+				return nowData.split(',')[0];
+			} else {
+				return '';
+			}
+		}
+	}
+	
+	function addData(self) {
+		$.ajax({
+			type: "GET",
+			url: "https://script.google.com/macros/s/AKfycbzJYh8jSilrTWF-eY9dV7L_cuWA3TjoJkBRjcCH0MOULXee3p0Y/exec#gid=1697221572",
+			data: {
+				"day": "2020. 8. 21",
+				"area": "테스트 지역",
+				"name": "이름"
+			},
+			success: function(response){
+				console.log(response);
+			}
+		});
+	}
+
+	function dataSearch(self){
+		let getDate = '이름을 찾을 수 없습니다.';
+		for (var i=0; i < allList.length; i++) {
+			if (allList[i].name === self) {
+				getDate = allList[i];
+			}
+		}
+		$('.myData').html(
+			'<div class="myDataHeader">' +
+			getDate.name + '<span class="is_age">(' + getDate.age + ')</span><br>' +
+			'</div>' +
+			'<div class="myDataBody">' +
+			'최근 출사 : ' + getDate.lastday + '<br>' +
+			'경과일 : ' + getDate.eapsedday + '일<br>' +
+			'참여율 : ' + getDate.percent + '<br>' +
+			'참여일 : ' + getDate.count + '<br>' +
+			'리뷰 : ' + getDate.review + '<br>' +
+			'점수 : ' + getDate.point + '점' +
+			'</div>' +
+			'<div class="myDataFooter">' +
+			'생일 : ' + getDate.birth + '<br>' +
+			'거주지 : ' + getDate.city + ' ' + getDate.district +
+			'</div>'
+		);
+	}
+</script>
+</body>
+</html>
