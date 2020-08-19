@@ -234,33 +234,34 @@
 						percent: splitData(nowData, 'percent: '), // 참여율
 						lastday: splitData(nowData, 'lastday: '), // 최근 출사
 						eapsedday: splitData(nowData, 'eapsedday: '), // 경과일
-						review: splitData(nowData, 'review: '), // 리뷰
+						nowCount: splitData(nowData, 'nowcount: '), // 현재 분기 참여일
+						review: splitData(nowData, 'review: '), // 현재 분기 리뷰
 						point: splitData(nowData, 'point: '), // 점수
 						rank: splitData(nowData, 'rank: '), // 등수
-						remart: splitData(nowData, 'remart: '), // 비고
+						// remart: splitData(nowData, 'remart: '), // 비고 (이슈내용 존재로 숨김처리)
 					};
 					allList.push(nowObject);
 					if (nowObject.name) {
 						if (nowObject.rank == '운영진') {
 							memberListHtml += "<div class='memberListBodyItem is_zero'>";
-						} else if (nowObject.rank == 1) {
+						} else if (nowObject.rank == '1위') {
 							memberListHtml += "<div class='memberListBodyItem is_one'>";
-						} else if (nowObject.rank == 2) {
+						} else if (nowObject.rank == '2위') {
 							memberListHtml += "<div class='memberListBodyItem is_two'>";
-						} else if (nowObject.rank == 3) {
+						} else if (nowObject.rank == '3위') {
 							memberListHtml += "<div class='memberListBodyItem is_three'>";
-						} else if (nowObject.rank == 4) {
+						} else if (nowObject.rank == '4위') {
 							memberListHtml += "<div class='memberListBodyItem is_four'>";
-						} else if (nowObject.rank == 5) {
+						} else if (nowObject.rank == '5위') {
 							memberListHtml += "<div class='memberListBodyItem is_five'>";
 						} else {
 							memberListHtml += "<div class='memberListBodyItem'>";
 						}
 						memberListHtml +=
 							"<div class='memberListBodyData is_name'>" + nowObject.name + "</div>" +
-							"<div class='memberListBodyData is_count'>" + nowObject.count + "회</div>" +
+							"<div class='memberListBodyData is_nowCount'>" + nowObject.nowCount + "회</div>" +
 							"<div class='memberListBodyData is_review'>" + nowObject.review + "</div>" +
-							"<div class='memberListBodyData is_point'>" + nowObject.point + "</div>" +
+							"<div class='memberListBodyData is_point'>" + nowObject.point + "점</div>" +
 							"<div class='memberListBodyData is_rank'>" + nowObject.rank + "</div>" +
 							"</div>"
 					}
@@ -312,9 +313,10 @@
 			'<div class="myDataBody">' +
 				'<strong>최근 출사 :</strong> ' + getDate.lastday + '<br>' +
 				'<strong>경과일 :</strong> ' + getDate.eapsedday + '일<br>' +
+				'<strong>전제 참여일 :</strong> ' + getDate.count + '일<br>' +
 				'<strong>참여율 :</strong> ' + getDate.percent + '<br>' +
-				'<strong>참여일 :</strong> ' + getDate.count + '<br>' +
-				'<strong>리뷰 :</strong> ' + getDate.review + '<br>' +
+				'<strong>분기 참여일 :</strong> ' + getDate.count + '일<br>' +
+				'<strong>분기 리뷰 :</strong> ' + getDate.review + '<br>' +
 				'<strong>점수 :</strong> ' + getDate.point + '점' +
 			'</div>' +
 			'<div class="myDataFooter">' +
