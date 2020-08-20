@@ -3,7 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-	<title>Title</title>
+	<title>사진을품다</title>
 	<link rel="stylesheet" type="text/css" href="reset.css">
 	<link rel="stylesheet" type="text/css" href="common.css">
 </head>
@@ -14,7 +14,7 @@
 			<strong>점수배점 :</strong> 출사 1회 2점, 후기작성 1회 1점
 		</li>
 		<li class="siteInfoItem">
-			<strong>우수회원 :</strong> 분기별 활동점수 1~5위(운영진 제외)를 선정하여 치킨 및 스타벅스 상품권을 지급합니다.
+			<strong>우수회원 :</strong> 분기별 활동점수 1~5위(운영진 제외)를 선정하여 치킨 및 스타벅스 상품권을 지급합니다.<br>
 		</li>
 		<li class="siteInfoItem">
 			<strong>회비 :</strong> 출사마다 1000원의 출사비를 받고 있으며, 소모임 프리미엄 등록비와 우수회원 선발비로 사용됩니다.
@@ -56,6 +56,7 @@
 				$(list).each(function(index, value){
 					const nowData = value.content.$t;
 					let nowObject = {
+						id: index, // 번호
 						name: splitData(nowData, 'name: '), // 이름
 						age: splitData(nowData, 'age: '), // 나이
 						gender: splitData(nowData, 'gender: '), // 성별
@@ -76,19 +77,19 @@
 					allList.push(nowObject);
 					if (nowObject.name) {
 						if (nowObject.rank == '운영진') {
-							memberListHtml += "<div class='memberListBodyItem is_zero'>";
+							memberListHtml += "<div class='memberListBodyItem is_zero id_" + nowObject.id + "'>";
 						} else if (nowObject.rank == '1위') {
-							memberListHtml += "<div class='memberListBodyItem is_one'>";
+							memberListHtml += "<div class='memberListBodyItem is_one id_" + nowObject.id + "'>";
 						} else if (nowObject.rank == '2위') {
-							memberListHtml += "<div class='memberListBodyItem is_two'>";
+							memberListHtml += "<div class='memberListBodyItem is_two id_" + nowObject.id + "'>";
 						} else if (nowObject.rank == '3위') {
-							memberListHtml += "<div class='memberListBodyItem is_three'>";
+							memberListHtml += "<div class='memberListBodyItem is_three id_" + nowObject.id + "'>";
 						} else if (nowObject.rank == '4위') {
-							memberListHtml += "<div class='memberListBodyItem is_four'>";
+							memberListHtml += "<div class='memberListBodyItem is_four id_" + nowObject.id + "'>";
 						} else if (nowObject.rank == '5위') {
-							memberListHtml += "<div class='memberListBodyItem is_five'>";
+							memberListHtml += "<div class='memberListBodyItem is_five id_" + nowObject.id + "'>";
 						} else {
-							memberListHtml += "<div class='memberListBodyItem'>";
+							memberListHtml += "<div class='memberListBodyItem id_" + nowObject.id + "'>";
 						}
 						memberListHtml +=
 							"<div class='memberListBodyData is_name'>" + nowObject.name + "</div>" +
@@ -156,6 +157,7 @@
 				'<li class="is_point"><strong>점수 :</strong> ' + getDate.point + '점</li>' +
 			'</ul>' +
 			'<ul class="myDataBody">' +
+				'<li class="is_gender"><strong>성별 :</strong> ' + getDate.gender + '</li>' +
 				'<li class="is_birth"><strong>생일 :</strong> ' + getDate.birth + '</li>' +
 				'<li class="is_city"><strong>거주지 :</strong> ' + getDate.city + ' ' + getDate.district + '</li>' +
 			'</ul>'
@@ -184,6 +186,12 @@
 		} else if (getDate.eapsedday > 40) {
 			$('.myData').addClass('is_over_40');
 		}
+		
+		if (getDate.count == 0) {
+			$('.myData').addClass('is_new');
+		}
+		
+		$('.memberListBodyItem.id_' + getDate.id).addClass('is_active');
 	}
 </script>
 </body>

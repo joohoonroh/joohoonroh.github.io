@@ -1,7 +1,7 @@
 body {
 	max-width: 1024px;
 	margin: auto;
-	padding: 24px;
+	padding: 26px;
 }
 .siteInfo {
 	margin-bottom: 16px;
@@ -103,6 +103,10 @@ body {
 	font-weight: bold;
 	color: red;
 }
+.myData.is_new .myDataHeader:after {
+	content: "첫 출사때 뵐게요~";
+	background-image: url("https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/apple/237/kissing-face-with-closed-eyes_1f61a.png");
+}
 .myData.is_over_40 .myDataHeader:after {
 	content: "못본지 오래되었네요";
 	background-image: url("https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/apple/237/relieved-face_1f60c.png");
@@ -189,10 +193,30 @@ body {
 	border-top: solid 1px #e5e5e5;
 }
 .memberListBodyItem {
+	position: relative;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	height: 32px;
+}
+.memberListBodyItem:after {
+	position: absolute;
+	content: "";
+	display: block;
+	width: 16px;
+	height: 16px;
+	top: calc(50% - 8px);
+	left: -21px;
+	background: no-repeat right;
+	background-size: contain;
+	opacity: 0.3;
+}
+.memberListBodyItem.is_active:after {
+	opacity: 1;
+}
+.memberListBodyItem.is_active .memberListBodyData {
+	font-size: 12px;
+	font-weight: bold;
 }
 .memberListBodyItem:nth-child(2n) {
 	background-color: #f9f9f9;
@@ -217,6 +241,15 @@ body {
 }
 .memberListBodyItem.is_five {
 	background-color: #fce3e3;
+}
+.memberListBodyItem.is_one:after,
+.memberListBodyItem.is_two:after {
+	background-image: url("https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/apple/237/poultry-leg_1f357.png");
+}
+.memberListBodyItem.is_three:after,
+.memberListBodyItem.is_four:after,
+.memberListBodyItem.is_five:after {
+	background-image: url("https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/apple/237/hot-beverage_2615.png");
 }
 .memberListBodyData {
 	flex: 1;
