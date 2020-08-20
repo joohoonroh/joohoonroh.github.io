@@ -1,0 +1,226 @@
+body {
+	max-width: 1024px;
+	margin: auto;
+	padding: 24px;
+}
+.siteInfo {
+	margin-bottom: 16px;
+}
+.siteInfoItem {
+	position: relative;
+	font-size: 11px;
+	line-height: 14px;
+	color: #555555;
+	padding-left: 6px;
+	margin-bottom: 5px;
+}
+.siteInfoItem strong {
+	font-weight: bold;
+}
+.siteInfoItem:before {
+	content: "";
+	display: block;
+	position: absolute;
+	left: 0;
+	top: 5px;
+	width: 2px;
+	height: 2px;
+	border-radius: 10px;
+	background-color: #333333;
+}
+.myDataFind {
+	position: relative;
+	width: 200px;
+	display: flex;
+}
+.dataSearch {
+	flex: 1;
+	width: 100px;
+}
+.dataSearchLabel {
+	position: absolute;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	right: 0;
+	top: 0;
+	font-size: 13px;
+	width: 21px;
+	height: 21px;
+	color: #333333;
+}
+.mainTitle {
+	display: block;
+	color: #333;
+	font-size: 22px;
+	font-weight: bold;
+	margin-bottom: 16px;
+	text-align: left;
+}
+.myData {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: row;
+	flex-wrap: wrap;
+	padding: 20px 16px;
+	box-shadow: 0px 3px 15px 3px rgba(0, 0, 0, .07);
+	border-radius: 5px;
+	margin-bottom: 30px;
+}
+.myData.is_0 .myDataHeader:after {
+	content: "고생이 참 많으십니다~";
+	background-image: url("https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/apple/237/relieved-face_1f60c.png");
+}
+.myData.is_p .myDataHeader:after {
+	content: "우수회원 입니다";
+	background-image: url("https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/apple/237/face-with-party-horn-and-party-hat_1f973.png");
+}
+.myData.is_1 .myDataBody .is_rank,
+.myData.is_2 .myDataBody .is_rank,
+.myData.is_3 .myDataBody .is_rank,
+.myData.is_4 .myDataBody .is_rank,
+.myData.is_5 .myDataBody .is_rank,
+.myData.is_p .myDataBody .is_rank{
+	font-weight: bold;
+}
+.myData.is_1 .myDataBody .is_rank:after,
+.myData.is_2 .myDataBody .is_rank:after {
+	color: red;
+	content: "치킨각~";
+	background-image: url("https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/apple/237/poultry-leg_1f357.png");
+}
+.myData.is_3 .myDataBody .is_rank:after,
+.myData.is_4 .myDataBody .is_rank:after,
+.myData.is_5 .myDataBody .is_rank:after {
+	color: red;
+	content: "스벅각~";
+	background-image: url("https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/apple/237/hot-beverage_2615.png");
+}
+.myData.is_over_40 .myDataBody .is_eapsedday,
+.myData.is_over_60 .myDataBody .is_eapsedday,
+.myData.is_over_120 .myDataBody .is_eapsedday{
+	font-weight: bold;
+	color: red;
+}
+.myData.is_over_40 .myDataHeader:after {
+	content: "못본지 오래되었네요";
+	background-image: url("https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/apple/237/relieved-face_1f60c.png");
+}
+.myData.is_over_60 .myDataHeader:after {
+	content: "60일이 넘었어요";
+	background-image: url("https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/apple/237/face-with-pleading-eyes_1f97a.png");
+}
+.myData.is_over_120 .myDataHeader:after {
+	content: "살아 있는거죠?!";
+	background-image: url("https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/apple/237/face-screaming-in-fear_1f631.png");
+}
+.myDataNoty {
+	flex: none;
+	display: block;
+	width: 100%;
+	font-size: 20px;
+	font-weight: bold;
+	text-align: center;
+	margin-bottom: 12px;
+}
+.myDataHeader {
+	position: relative;
+	flex: none;
+	width: 100%;
+	font-size: 20px;
+	font-weight: bold;
+}
+.myDataHeader:after {
+	content: "";
+	display: inline-block;
+	font-size: 13px;
+	line-height: 13px;
+	padding: 7px 25px 0 7px;
+	background: no-repeat right;
+	background-size: contain;
+	vertical-align: bottom;
+}
+.myDataHeader .is_age {
+	display: inline-block;
+	font-size: 13px;
+	margin-left: 5px;
+}
+.myDataBody {
+	flex: none;
+	width: 100%;
+	font-size: 14px;
+	line-height: 18px;
+	margin-top: 12px;
+}
+.myDataBody strong {
+	font-weight: bold;
+}
+.myDataBody li:after {
+	content: "";
+	display: inline-block;
+	font-size: 16px;
+	font-weight: bold;
+	padding: 0 20px 0 8px;
+	background: no-repeat right;
+	background-size: contain;
+	vertical-align: middle;
+}
+.memberList {
+	width: 100%;
+	border: solid 1px #e5e5e5;
+	border-radius: 5px;
+}
+.memberListHead {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: #f0f0f0;
+	height: 32px;
+}
+.memberListHeadTitle {
+	flex: 1;
+	text-align: center;
+	font-size: 12px;
+	font-weight: bold;
+	min-width: 30px;
+}
+.memberListBody {
+	border-top: solid 1px #e5e5e5;
+}
+.memberListBodyItem {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 32px;
+}
+.memberListBodyItem:nth-child(2n) {
+	background-color: #f9f9f9;
+}
+.memberListBodyItem.is_zero {
+	background-color: #e0ecf8;
+}
+.memberListBodyItem.is_zero:nth-child(2n) {
+	background-color: #d5e6f5;
+}
+.memberListBodyItem.is_one {
+	background-color: #ff9797;
+}
+.memberListBodyItem.is_two {
+	background-color: #ffa8a8;
+}
+.memberListBodyItem.is_three {
+	background-color: #ffbebe;
+}
+.memberListBodyItem.is_four {
+	background-color: #ffd1d1;
+}
+.memberListBodyItem.is_five {
+	background-color: #fce3e3;
+}
+.memberListBodyData {
+	flex: 1;
+	font-size: 11px;
+	text-align: center;
+	min-width: 30px;
+}

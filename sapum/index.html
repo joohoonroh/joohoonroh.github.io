@@ -5,174 +5,7 @@
 	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 	<title>Title</title>
 	<link rel="stylesheet" type="text/css" href="reset.css">
-	<style>
-		body {
-			padding: 24px;
-		}
-		.siteInfo {
-			margin-bottom: 16px;
-		}
-		.siteInfoItem {
-			position: relative;
-			font-size: 11px;
-			line-height: 14px;
-			color: #555555;
-			padding-left: 6px;
-			margin-bottom: 5px;
-		}
-		.siteInfoItem strong {
-			font-weight: bold;
-		}
-		.siteInfoItem:before {
-			content: "";
-			display: block;
-			position: absolute;
-			left: 0;
-			top: 5px;
-			width: 2px;
-			height: 2px;
-			border-radius: 10px;
-			background-color: #333333;
-		}
-		.myDataFind {
-			position: relative;
-			width: 200px;
-			display: flex;
-		}
-		.dataSearch {
-			flex: 1;
-			width: 100px;
-		}
-		.dataSearchLabel {
-			position: absolute;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			right: 0;
-			top: 0;
-			font-size: 13px;
-			width: 21px;
-			height: 21px;
-			color: #333333;
-		}
-		.mainTitle {
-			display: block;
-			color: #333;
-			font-size: 22px;
-			font-weight: bold;
-			margin-bottom: 16px;
-			text-align: left;
-		}
-		.myData {
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			flex-direction: row;
-			flex-wrap: wrap;
-			padding: 20px 16px;
-			box-shadow: 0px 3px 15px 3px rgba(0, 0, 0, .07);
-			border-radius: 5px;
-			margin-bottom: 30px;
-		}
-		.myDataNoty {
-			flex: none;
-			display: block;
-			width: 100%;
-			font-size: 20px;
-			font-weight: bold;
-			text-align: center;
-			margin-bottom: 12px;
-		}
-		.myDataHeader {
-			flex: none;
-			width: 100%;
-			font-size: 20px;
-			font-weight: bold;
-			margin-bottom: 14px;
-		}
-		.myDataHeader .is_age {
-			display: inline-block;
-			font-size: 13px;
-			margin-left: 5px;
-		}
-		.myDataBody {
-			flex: none;
-			width: 100%;
-			font-size: 14px;
-			line-height: 18px;
-		}
-		.myDataBody strong {
-			font-weight: bold;
-		}
-		.myDataFooter {
-			flex: none;
-			width: 100%;
-			font-size: 14px;
-			margin-top: 12px;
-			line-height: 18px;
-		}
-		.myDataFooter strong {
-			font-weight: bold;
-		}
-		.memberList {
-			width: 100%;
-			border: solid 1px #e5e5e5;
-			border-radius: 5px;
-		}
-		.memberListHead {
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			background-color: #f0f0f0;
-			height: 32px;
-		}
-		.memberListHeadTitle {
-			flex: 1;
-			text-align: center;
-			font-size: 12px;
-			font-weight: bold;
-			min-width: 30px;
-		}
-		.memberListBody {
-			border-top: solid 1px #e5e5e5;
-		}
-		.memberListBodyItem {
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			height: 32px;
-		}
-		.memberListBodyItem:nth-child(2n) {
-			background-color: #f9f9f9;
-		}
-		.memberListBodyItem.is_zero {
-			background-color: #e0ecf8;
-		}
-		.memberListBodyItem.is_zero:nth-child(2n) {
-			background-color: #d5e6f5;
-		}
-		.memberListBodyItem.is_one {
-			background-color: #ff9999;
-		}
-		.memberListBodyItem.is_two {
-			background-color: #ffaaaa;
-		}
-		.memberListBodyItem.is_three {
-			background-color: #ffbbbb;
-		}
-		.memberListBodyItem.is_four {
-			background-color: #ffcfcf;
-		}
-		.memberListBodyItem.is_five {
-			background-color: #ffdddd;
-		}
-		.memberListBodyData {
-			flex: 1;
-			font-size: 11px;
-			text-align: center;
-			min-width: 30px;
-		}
-	</style>
+	<link rel="stylesheet" type="text/css" href="common.css">
 </head>
 <body>
 	<h1 class="mainTitle">사진을 품다</h1>
@@ -308,22 +141,49 @@
 		}
 		$('.myData').html(
 			'<div class="myDataHeader">' +
-				getDate.name + '<span class="is_age">(' + getDate.age + ')</span><br>' +
+				getDate.name + '<span class="is_age">(' + getDate.age + ')</span>' +
 			'</div>' +
-			'<div class="myDataBody">' +
-				'<strong>최근 출사 :</strong> ' + getDate.lastday + '<br>' +
-				'<strong>경과일 :</strong> ' + getDate.eapsedday + '일<br>' +
-				'<strong>전제 참여일 :</strong> ' + getDate.count + '일<br>' +
-				'<strong>참여율 :</strong> ' + getDate.percent + '<br>' +
-				'<strong>분기 참여일 :</strong> ' + getDate.count + '일<br>' +
-				'<strong>분기 리뷰 :</strong> ' + getDate.review + '회<br>' +
-				'<strong>점수 :</strong> ' + getDate.point + '점' +
-			'</div>' +
-			'<div class="myDataFooter">' +
-				'<strong>생일 :</strong> ' + getDate.birth + '<br>' +
-				'<strong>거주지 :</strong> ' + getDate.city + ' ' + getDate.district +
-			'</div>'
+			'<ul class="myDataBody">' +
+				'<li class="is_count"><strong>전체 참여일 :</strong> ' + getDate.count + '회</li>' +
+				'<li class="is_percent"><strong>참여율 :</strong> ' + getDate.percent + '</li>' +
+				'<li class="is_lastday"><strong>최근 출사 :</strong> ' + getDate.lastday + '</li>' +
+				'<li class="is_eapsedday"><strong>경과일 :</strong> ' + getDate.eapsedday + '일</li>' +
+			'</ul>' +
+			'<ul class="myDataBody">' +
+				'<li class="is_rank"><strong>등수 :</strong> ' + getDate.rank + '</li>' +
+				'<li class="is_nowCount"><strong>참여일 :</strong> ' + getDate.nowCount + '회</li>' +
+				'<li class="is_review"><strong>리뷰 :</strong> ' + getDate.review + '회</li>' +
+				'<li class="is_point"><strong>점수 :</strong> ' + getDate.point + '점</li>' +
+			'</ul>' +
+			'<ul class="myDataBody">' +
+				'<li class="is_birth"><strong>생일 :</strong> ' + getDate.birth + '</li>' +
+				'<li class="is_city"><strong>거주지 :</strong> ' + getDate.city + ' ' + getDate.district + '</li>' +
+			'</ul>'
 		);
+		
+		if (getDate.rank == "운영진") {
+			$('.myData').addClass('is_0');
+		} else if (getDate.rank == "1위") {
+			$('.myData').addClass('is_1 is_p');
+		} else if (getDate.rank == "2위") {
+			$('.myData').addClass('is_2 is_p');
+		} else if (getDate.rank == "3위") {
+			$('.myData').addClass('is_3 is_p');
+		} else if (getDate.rank == "4위") {
+			$('.myData').addClass('is_4 is_p');
+		} else if (getDate.rank == "5위") {
+			$('.myData').addClass('is_5 is_p');
+		} else if (getDate.rank == "6위" || getDate.rank == "7위" || getDate.rank == "8위" || getDate.rank == "9위" || getDate.rank == "10위") {
+			$('.myData').addClass('is_p');
+		}
+		
+		if (getDate.eapsedday > 120) {
+			$('.myData').addClass('is_over_120');
+		} else if (getDate.eapsedday > 60) {
+			$('.myData').addClass('is_over_60');
+		} else if (getDate.eapsedday > 40) {
+			$('.myData').addClass('is_over_40');
+		}
 	}
 </script>
 </body>
