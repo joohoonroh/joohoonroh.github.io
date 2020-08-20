@@ -1,7 +1,7 @@
 body {
 	max-width: 1024px;
 	margin: auto;
-	padding: 26px;
+	padding: 22px;
 }
 .siteInfo {
 	margin-bottom: 16px;
@@ -203,10 +203,10 @@ body {
 	position: absolute;
 	content: "";
 	display: block;
-	width: 16px;
-	height: 16px;
+	width: 15px;
+	height: 15px;
 	top: calc(50% - 8px);
-	left: -21px;
+	left: -19px;
 	background: no-repeat right;
 	background-size: contain;
 	opacity: 0.3;
