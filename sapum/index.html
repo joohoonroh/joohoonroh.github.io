@@ -45,18 +45,19 @@
 		getDataInit();
 	})
 
-	function getDataInit() {
+	function getDataInit(reset) {
 		$.ajax({
 			url: "https://spreadsheets.google.com/feeds/list/1tfCl96cw8emDFFs6NT37wKOrMnF4UYiDS3uuTHE93bQ/1/public/basic?alt=json",
 			type: "GET",
 			dataType: "JSON",
 			success: function(response){
+				console.log(response);
 				let list = response.feed.entry;
 				let memberListHtml = "";
 				$(list).each(function(index, value){
 					const nowData = value.content.$t;
 					let nowObject = {
-						id: index, // 번호
+						id: index + 1, // 번호
 						name: splitData(nowData, 'name: '), // 이름
 						age: splitData(nowData, 'age: '), // 나이
 						gender: splitData(nowData, 'gender: '), // 성별
@@ -100,11 +101,13 @@
 							"</div>"
 					}
 				})
-				console.log(allList);
 				$('.memberListBody').html(memberListHtml);
 				$('.dataSearch').on('change', function (e) {
 					dataSearch(e.target.value);
-				})
+				});
+				if (reset) {
+					dataSearch(reset);
+				}
 			}
 		});
 		
@@ -118,17 +121,19 @@
 		}
 	}
 	
-	function addData(self) {
+	function addData(event, getDate) {
 		$.ajax({
 			type: "GET",
 			url: "https://script.google.com/macros/s/AKfycbzJYh8jSilrTWF-eY9dV7L_cuWA3TjoJkBRjcCH0MOULXee3p0Y/exec#gid=1697221572",
 			data: {
-				"day": "2020. 8. 21",
-				"area": "테스트 지역",
-				"name": "이름"
+				event: event,
+				id: getDate.id, // 번호
+				name: getDate.name, // 이름
+				review: getDate.review, // 현재 분기 리뷰
 			},
 			success: function(response){
 				console.log(response);
+				getDataInit(getDate.name);
 			}
 		});
 	}
@@ -153,8 +158,8 @@
 			'<ul class="myDataBody">' +
 				'<li class="is_rank"><strong>등수 :</strong> ' + getDate.rank + '</li>' +
 				'<li class="is_nowCount"><strong>참여일 :</strong> ' + getDate.nowCount + '회</li>' +
-				'<li class="is_review"><strong>리뷰 :</strong> ' + getDate.review + '회</li>' +
-				'<li class="is_point"><strong>점수 :</strong> ' + getDate.point + '점</li>' +
+				'<li class="is_review"><strong>리뷰 :</strong> <span>' + getDate.review + '회</span> <button type="button" class="review_up">+</button><button type="button" class="review_down">-</button></li>' +
+				'<li class="is_point"><strong>점수 :</strong> <span>' + getDate.point + '점</span></li>' +
 			'</ul>' +
 			'<ul class="myDataBody">' +
 				'<li class="is_gender"><strong>성별 :</strong> ' + getDate.gender + '</li>' +
@@ -192,6 +197,13 @@
 		}
 		
 		$('.memberListBodyItem.id_' + getDate.id).addClass('is_active');
+		
+		$('.review_up').on('click', function () {
+			addData("up", getDate);
+		})
+		$('.review_down').on('click', function () {
+			addData("down", getDate);
+		})
 	}
 </script>
 </body>
