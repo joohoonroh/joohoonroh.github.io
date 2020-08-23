@@ -15,10 +15,20 @@ function handleResponse(e) {
 	try {
 		var doc = SpreadsheetApp.openById(SCRIPT_PROP.getProperty("key"));
 		var sheet = e.parameter.sheet || doc.getSheets()[0];
-		var nextRow = sheet.getLastRow() + 1; // 마지막 행 다음칸
-		var target = sheet.getRange(e.parameter.position + (Number(e.parameter.id) + 1));
+		var headRow = e.parameter.header_row || 1; // 헤더 열 위치 (기본 1)
+		var headers = sheet.getRange(headRow, 1, 1, sheet.getLastColumn()).getValues()[0];
+		var target = sheet.getRange((Number(e.parameter.id) + 1), nowColumn(e.parameter.name));
 		var targetValue = target.getValue();
 		var func = e.parameter.func.split("self").join(targetValue);
+		var nextRow = sheet.getLastRow() + 1; // 마지막 행 다음칸
+
+		function nowColumn(name) {
+			for (var i = 0; i < headers.length; i++) {
+				if (headers[i] == name) {
+					return i + 1;
+				}
+			}
+		}
 
 		target.setValue(eval(func));
 

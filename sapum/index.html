@@ -187,22 +187,23 @@
 		$('.memberListBodyItem.id_' + nowDate.id).addClass('is_active');
 
 		$('.review_up').on('click', function () {
-			addData("M", "self + 1");
+			addData({name : "review", func : "self + 1"});
 		})
 		$('.review_down').on('click', function () {
-			addData("M", "self - 1");
+			addData({name : "review", func : "self - 1"});
 		})
 	}
 
 	// 회원 개별 데이터 수정
-	function addData(position, func, sheet) {
+	function addData({name, func, sheet, header_row}) {
 		$.ajax({
 			type: "GET",
 			url: "https://script.google.com/macros/s/AKfycbzJYh8jSilrTWF-eY9dV7L_cuWA3TjoJkBRjcCH0MOULXee3p0Y/exec#gid=1697221572",
 			data: {
-				position : position,
+				name : name,
 				func : func,
-				sheet : sheet || '',
+				header_row : header_row,
+				sheet : sheet,
 				id : nowDate.id
 			},
 			success: function (response) {
