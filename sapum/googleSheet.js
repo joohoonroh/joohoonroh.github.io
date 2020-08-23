@@ -19,7 +19,9 @@ function handleResponse(e) {
 		var headers = sheet.getRange(headRow, 1, 1, sheet.getLastColumn()).getValues()[0];
 		var target = sheet.getRange((Number(e.parameter.id) + 1), nowColumn(e.parameter.name));
 		var targetValue = target.getValue();
-		var func = e.parameter.func.split("self").join(targetValue);
+		var subTargetValue = sheet.getRange((Number(e.parameter.id) + 1), nowColumn(e.parameter.sub)).getValue();
+
+		var func = e.parameter.func.split("self").join(targetValue).split("sub").join(subTargetValue);
 		var nextRow = sheet.getLastRow() + 1; // 마지막 행 다음칸
 
 		function nowColumn(name) {
