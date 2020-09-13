@@ -11,13 +11,16 @@
 <h1 class="mainTitle">사진을 품다</h1>
 <ul class="siteInfo">
 	<li class="siteInfoItem">
-			<strong>점수배점 :</strong> 출사 1회 2점, 후기작성 1회 1점
+		<strong>점수배점 :</strong>
+		출사 1회 2점, 후기작성 1회 1점
 	</li>
 	<li class="siteInfoItem">
-			<strong>우수회원 :</strong> 분기별 활동점수 1~5위(운영진 제외)를 선정하여 치킨 및 스타벅스 상품권을 지급합니다.<br>
+		<strong>우수회원 :</strong>
+		분기별 활동점수 1~5위(운영진 제외)를 선정하여 치킨 및 스타벅스 상품권을 지급합니다.
 	</li>
 	<li class="siteInfoItem">
-			<strong>회비 :</strong> 출사마다 1000원의 출사비를 받고 있으며, 소모임 프리미엄 등록비와 우수회원 선발비로 사용됩니다.
+		<strong>회비 :</strong>
+		출사마다 1,000원의 출사비를 받고 있으며, 소모임 프리미엄 등록비와 우수회원 선발비로 사용됩니다.
 	</li>
 </ul>
 <div class="myData">
@@ -36,16 +39,24 @@
 	</div>
 	<div class="memberListBody"></div>
 </div>
-
+<div class="toastPopup" style="display: none; opacity: 0;"></div>
+<div class="fullDim">
+	<div class="loading"></div>
+</div>
 <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
 <script>
 	const allList = [];
+	let nowDate = "";
+	let toastPopupTimerOut = "";
+	let toastPopupTimerIn = "";
 
 	$(document).ready(function () {
 		getDataInit();
 	})
 
-	function getDataInit() {
+	// 회원 데이터 리스트 조회
+	function getDataInit(reset) {
+		$('.fullDim').show();
 		$.ajax({
 			url: "https://spreadsheets.google.com/feeds/list/1tfCl96cw8emDFFs6NT37wKOrMnF4UYiDS3uuTHE93bQ/1/public/basic?alt=json",
 			type: "GET",
@@ -56,7 +67,7 @@
 				$(list).each(function (index, value) {
 					const nowData = value.content.$t;
 					let nowObject = {
-						id: index, // 번호
+						id: index + 1, // 번호
 						name: splitData(nowData, 'name: '), // 이름
 						age: splitData(nowData, 'age: '), // 나이
 						gender: splitData(nowData, 'gender: '), // 성별
@@ -72,7 +83,7 @@
 						review: splitData(nowData, 'review: '), // 현재 분기 리뷰
 						point: splitData(nowData, 'point: '), // 점수
 						rank: splitData(nowData, 'rank: '), // 등수
-						// remart: splitData(nowData, 'remart: '), // 비고 (이슈내용 존재로 숨김처리)
+						// remart: splitData(nowData, 'remart: '), // 비고 (숨김처리)
 					};
 					allList.push(nowObject);
 					if (nowObject.name) {
@@ -100,11 +111,15 @@
 							"</div>"
 					}
 				})
-				console.log(allList);
 				$('.memberListBody').html(memberListHtml);
 				$('.dataSearch').on('change', function (e) {
 					dataSearch(e.target.value);
-				})
+				});
+				if (reset) {
+					dataSearch(reset);
+				} else {
+					$('.fullDim').hide();
+				}
 			}
 		});
 
@@ -132,67 +147,118 @@
 	}
 
 	function dataSearch(self){
-		let getDate = '';
-		for (var i=0; i < allList.length; i++) {
+		for (var i = 0; i < allList.length; i++) {
 			if (allList[i].name === self) {
-				getDate = allList[i];
+				nowDate = allList[i];
 			}
 		}
-		if (getDate) {
+		console.log(dataSearch);
+		if (nowDate) {
 			$('.myData').html(
 				'<div class="myDataHeader">' +
-					getDate.name + '<span class="is_age">(' + getDate.age + ')</span>' +
+				nowDate.name + '<span class="is_age">(' + nowDate.age + ')</span>' +
 				'</div>' +
 				'<ul class="myDataBody">' +
-					'<li class="is_count"><strong>전체 참여일 :</strong> ' + getDate.count + '회</li>' +
-					'<li class="is_percent"><strong>참여율 :</strong> ' + getDate.percent + '</li>' +
-					'<li class="is_lastday"><strong>최근 출사 :</strong> ' + getDate.lastday + '</li>' +
-					'<li class="is_eapsedday"><strong>경과일 :</strong> ' + getDate.eapsedday + '일</li>' +
+				'<li class="is_count"><strong>전체 참여일 :</strong> ' + nowDate.count + '회</li>' +
+				'<li class="is_percent"><strong>참여율 :</strong> ' + nowDate.percent + '</li>' +
+				'<li class="is_lastday"><strong>최근 출사 :</strong> ' + nowDate.lastday + '</li>' +
+				'<li class="is_eapsedday"><strong>경과일 :</strong> ' + nowDate.eapsedday + '일</li>' +
 				'</ul>' +
 				'<ul class="myDataBody">' +
-					'<li class="is_rank"><strong>등수 :</strong> ' + getDate.rank + '</li>' +
-					'<li class="is_nowCount"><strong>참여일 :</strong> ' + getDate.nowCount + '회</li>' +
-					'<li class="is_review"><strong>리뷰 :</strong> ' + getDate.review + '회</li>' +
-					'<li class="is_point"><strong>점수 :</strong> ' + getDate.point + '점</li>' +
+				'<li class="is_rank"><strong>등수 :</strong> ' + nowDate.rank + '</li>' +
+				'<li class="is_nowCount"><strong>참여일 :</strong> ' + nowDate.nowCount + '회</li>' +
+				'<li class="is_review"><strong>리뷰 :</strong> <span>' + nowDate.review + '회</span> <button type="button" class="review_up">+</button><button type="button" class="review_down">-</button></li>' +
+				'<li class="is_point"><strong>점수 :</strong> <span>' + nowDate.point + '점</span></li>' +
 				'</ul>' +
 				'<ul class="myDataBody">' +
-					'<li class="is_gender"><strong>성별 :</strong> ' + getDate.gender + '</li>' +
-					'<li class="is_birth"><strong>생일 :</strong> ' + getDate.birth + '</li>' +
-					'<li class="is_city"><strong>거주지 :</strong> ' + getDate.city + ' ' + getDate.district + '</li>' +
+				'<li class="is_gender"><strong>성별 :</strong> ' + nowDate.gender + '</li>' +
+				'<li class="is_birth"><strong>생일 :</strong> ' + nowDate.birth + '</li>' +
+				'<li class="is_city"><strong>거주지 :</strong> ' + nowDate.city + ' ' + nowDate.district + '</li>' +
 				'</ul>'
 			);
 
-			if (getDate.rank == "운영진") {
+			if (nowDate.rank == "운영진") {
 				$('.myData').addClass('is_0');
-			} else if (getDate.rank == "1위") {
+			} else if (nowDate.rank == "1위") {
 				$('.myData').addClass('is_1 is_p');
-			} else if (getDate.rank == "2위") {
+			} else if (nowDate.rank == "2위") {
 				$('.myData').addClass('is_2 is_p');
-			} else if (getDate.rank == "3위") {
+			} else if (nowDate.rank == "3위") {
 				$('.myData').addClass('is_3 is_p');
-			} else if (getDate.rank == "4위") {
+			} else if (nowDate.rank == "4위") {
 				$('.myData').addClass('is_4 is_p');
-			} else if (getDate.rank == "5위") {
+			} else if (nowDate.rank == "5위") {
 				$('.myData').addClass('is_5 is_p');
-			} else if (getDate.rank == "6위" || getDate.rank == "7위" || getDate.rank == "8위" || getDate.rank == "9위" || getDate.rank == "10위") {
+			} else if (nowDate.rank == "6위" || nowDate.rank == "7위" || nowDate.rank == "8위" || nowDate.rank == "9위" || nowDate.rank == "10위") {
 				$('.myData').addClass('is_p');
 			}
 
-			if (getDate.eapsedday > 120) {
+			if (nowDate.eapsedday > 120) {
 				$('.myData').addClass('is_over_120');
-			} else if (getDate.eapsedday > 60) {
+			} else if (nowDate.eapsedday > 60) {
 				$('.myData').addClass('is_over_60');
-			} else if (getDate.eapsedday > 40) {
+			} else if (nowDate.eapsedday > 40) {
 				$('.myData').addClass('is_over_40');
 			}
 
-			if (getDate.count == 0) {
+			if (nowDate.count == 0) {
 				$('.myData').addClass('is_new');
 			}
 
-			$('.memberListBodyItem.id_' + getDate.id).addClass('is_active');	
+			$('.memberListBodyItem.id_' + nowDate.id).addClass('is_active');
+
+			$('.review_up').on('click', function () {
+				addData({name : "review", func : "self < sub ? self + 1 : self", sub : "nowCount", callbackText : "1출사 1리뷰만 가능합니다"});
+			})
+			$('.review_down').on('click', function () {
+				addData({name : "review", func : "0 < self ? self - 1 : self", sub : "nowCount"});
+			})
+			$('.fullDim').hide();
 		} else {
-			alert("이름을 찾을 수 없습니다.");
+			toastPopupOpen("이름을 찾을 수 없습니다.");
+		}
+
+		// 회원 개별 데이터 수정
+		function addData({name, func, sheet, header_row, sub, callbackText}) {
+			$('.fullDim').show();
+			$.ajax({
+				type: "GET",
+				url: "https://script.google.com/macros/s/AKfycbzJYh8jSilrTWF-eY9dV7L_cuWA3TjoJkBRjcCH0MOULXee3p0Y/exec#gid=1697221572",
+				data: {
+					name : name,
+					func : func,
+					header_row : header_row,
+					sheet : sheet,
+					sub : sub,
+					callbackText : callbackText,
+					id : nowDate.id
+				},
+				success: function (response) {
+					getDataInit(nowDate.name);
+					if (response.callback && response.callbackText) {
+						toastPopupOpen(response.callbackText);
+					}
+				}
+			});
+		}
+
+		//toastPopup
+		function toastPopupOpen(text) {
+			if (text) {
+				const $toastPopup = $('.toastPopup');
+				clearTimeout(toastPopupTimerOut);
+				clearTimeout(toastPopupTimerIn);
+				$toastPopup.show().css('opacity', '0').html(text);
+				setTimeout(function () {
+					$toastPopup.css('opacity', '1');
+				}, 1);
+				toastPopupTimerOut = setTimeout(function () {
+					$toastPopup.css('opacity', '0');
+					toastPopupTimerIn = setTimeout(function () {
+						$toastPopup.css('opacity', '0').hide().html("");
+					}, 500);
+				}, 2000);
+			}
 		}
 	}
 </script>
