@@ -121,11 +121,9 @@
 	function addData(self) {
 		$.ajax({
 			type: "GET",
-			url: "https://script.google.com/macros/s/AKfycbzJYh8jSilrTWF-eY9dV7L_cuWA3TjoJkBRjcCH0MOULXee3p0Y/exec#gid=1697221572",
+			url: "https://script.google.com/macros/s/AKfycbzJYh8jSilrTWF-eY9dV7L_cuWA3TjoJkBRjcCH0MOULXee3p0Y/exec",
 			data: {
-				"day": "2020. 8. 21",
-				"area": "테스트 지역",
-				"name": "이름"
+				"review": 1,
 			},
 			success: function(response){
 				console.log(response);
@@ -134,64 +132,68 @@
 	}
 
 	function dataSearch(self){
-		let getDate = '이름을 찾을 수 없습니다.';
+		let getDate = '';
 		for (var i=0; i < allList.length; i++) {
 			if (allList[i].name === self) {
 				getDate = allList[i];
 			}
 		}
-		$('.myData').html(
-			'<div class="myDataHeader">' +
-				getDate.name + '<span class="is_age">(' + getDate.age + ')</span>' +
-			'</div>' +
-			'<ul class="myDataBody">' +
-				'<li class="is_count"><strong>전체 참여일 :</strong> ' + getDate.count + '회</li>' +
-				'<li class="is_percent"><strong>참여율 :</strong> ' + getDate.percent + '</li>' +
-				'<li class="is_lastday"><strong>최근 출사 :</strong> ' + getDate.lastday + '</li>' +
-				'<li class="is_eapsedday"><strong>경과일 :</strong> ' + getDate.eapsedday + '일</li>' +
-			'</ul>' +
-			'<ul class="myDataBody">' +
-				'<li class="is_rank"><strong>등수 :</strong> ' + getDate.rank + '</li>' +
-				'<li class="is_nowCount"><strong>참여일 :</strong> ' + getDate.nowCount + '회</li>' +
-				'<li class="is_review"><strong>리뷰 :</strong> ' + getDate.review + '회</li>' +
-				'<li class="is_point"><strong>점수 :</strong> ' + getDate.point + '점</li>' +
-			'</ul>' +
-			'<ul class="myDataBody">' +
-				'<li class="is_gender"><strong>성별 :</strong> ' + getDate.gender + '</li>' +
-				'<li class="is_birth"><strong>생일 :</strong> ' + getDate.birth + '</li>' +
-				'<li class="is_city"><strong>거주지 :</strong> ' + getDate.city + ' ' + getDate.district + '</li>' +
-			'</ul>'
-		);
-		
-		if (getDate.rank == "운영진") {
-			$('.myData').addClass('is_0');
-		} else if (getDate.rank == "1위") {
-			$('.myData').addClass('is_1 is_p');
-		} else if (getDate.rank == "2위") {
-			$('.myData').addClass('is_2 is_p');
-		} else if (getDate.rank == "3위") {
-			$('.myData').addClass('is_3 is_p');
-		} else if (getDate.rank == "4위") {
-			$('.myData').addClass('is_4 is_p');
-		} else if (getDate.rank == "5위") {
-			$('.myData').addClass('is_5 is_p');
-		} else if (getDate.rank == "6위" || getDate.rank == "7위" || getDate.rank == "8위" || getDate.rank == "9위" || getDate.rank == "10위") {
-			$('.myData').addClass('is_p');
+		if (getDate) {
+			$('.myData').html(
+				'<div class="myDataHeader">' +
+					getDate.name + '<span class="is_age">(' + getDate.age + ')</span>' +
+				'</div>' +
+				'<ul class="myDataBody">' +
+					'<li class="is_count"><strong>전체 참여일 :</strong> ' + getDate.count + '회</li>' +
+					'<li class="is_percent"><strong>참여율 :</strong> ' + getDate.percent + '</li>' +
+					'<li class="is_lastday"><strong>최근 출사 :</strong> ' + getDate.lastday + '</li>' +
+					'<li class="is_eapsedday"><strong>경과일 :</strong> ' + getDate.eapsedday + '일</li>' +
+				'</ul>' +
+				'<ul class="myDataBody">' +
+					'<li class="is_rank"><strong>등수 :</strong> ' + getDate.rank + '</li>' +
+					'<li class="is_nowCount"><strong>참여일 :</strong> ' + getDate.nowCount + '회</li>' +
+					'<li class="is_review"><strong>리뷰 :</strong> ' + getDate.review + '회</li>' +
+					'<li class="is_point"><strong>점수 :</strong> ' + getDate.point + '점</li>' +
+				'</ul>' +
+				'<ul class="myDataBody">' +
+					'<li class="is_gender"><strong>성별 :</strong> ' + getDate.gender + '</li>' +
+					'<li class="is_birth"><strong>생일 :</strong> ' + getDate.birth + '</li>' +
+					'<li class="is_city"><strong>거주지 :</strong> ' + getDate.city + ' ' + getDate.district + '</li>' +
+				'</ul>'
+			);
+
+			if (getDate.rank == "운영진") {
+				$('.myData').addClass('is_0');
+			} else if (getDate.rank == "1위") {
+				$('.myData').addClass('is_1 is_p');
+			} else if (getDate.rank == "2위") {
+				$('.myData').addClass('is_2 is_p');
+			} else if (getDate.rank == "3위") {
+				$('.myData').addClass('is_3 is_p');
+			} else if (getDate.rank == "4위") {
+				$('.myData').addClass('is_4 is_p');
+			} else if (getDate.rank == "5위") {
+				$('.myData').addClass('is_5 is_p');
+			} else if (getDate.rank == "6위" || getDate.rank == "7위" || getDate.rank == "8위" || getDate.rank == "9위" || getDate.rank == "10위") {
+				$('.myData').addClass('is_p');
+			}
+
+			if (getDate.eapsedday > 120) {
+				$('.myData').addClass('is_over_120');
+			} else if (getDate.eapsedday > 60) {
+				$('.myData').addClass('is_over_60');
+			} else if (getDate.eapsedday > 40) {
+				$('.myData').addClass('is_over_40');
+			}
+
+			if (getDate.count == 0) {
+				$('.myData').addClass('is_new');
+			}
+
+			$('.memberListBodyItem.id_' + getDate.id).addClass('is_active');	
+		} else {
+			alert("이름을 찾을 수 없습니다.");
 		}
-		
-		if (getDate.eapsedday > 120) {
-			$('.myData').addClass('is_over_120');
-		} else if (getDate.eapsedday > 60) {
-			$('.myData').addClass('is_over_60');
-		} else if (getDate.eapsedday > 40) {
-			$('.myData').addClass('is_over_40');
-		}
-		
-		if (getDate.count == 0) {
-			$('.myData').addClass('is_new');
-		}
-		
-		$('.memberListBodyItem.id_' + getDate.id).addClass('is_active');
 	}
 </script>
 </body>
