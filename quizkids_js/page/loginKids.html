@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<link rel="stylesheet" href="../css/reset.css" />
+	<link rel="stylesheet" href="../css/common.css" />
+	<title>QuizKids</title>
+</head>
+<body>
+	<div class="App">
+		<h1 class="hero">
+			<div class="hideText">Quiz Kids</div>
+			<div class="heroInner">
+				키즈
+			</div>
+		</h1>
+		<div class="container">
+			<div class="inputWrap">
+				<select class="flatInput" name="class">
+					<option value="" disabled hidden selected>학교</option>
+					<option value="퀴즈중학교">퀴즈중학교</option>
+					<option value="키즈초등학교">키즈초등학교</option>
+				</select>
+				<select class="flatInput is_fix" name="class">
+					<option value="" disabled hidden selected>반</option>
+					<option value="2반">2반</option>
+					<option value="4반">4반</option>
+					<option value="5반">5반</option>
+				</select>
+			</div>
+			<div class="inputWrap">
+				<input class="flatInput is_num" type="tel" required="required" autocomplete="off" maxlength="3" placeholder="번호">
+			</div>
+			<div class="inputWrap">
+				<input class="flatInput" type="text" placeholder="이름">
+				<div class="inputUnderWrap">
+					<a class="inputUnderBtn" href="loginTeacher.html">교사전환</a>
+				</div>
+			</div>
+			<button class="boxButton">시작</button>
+		</div>
+	</div>
+	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+	<script type="text/javascript" src="../js/common.js"></script>
+</body>
+</html>

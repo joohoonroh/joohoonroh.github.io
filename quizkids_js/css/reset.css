@@ -1,0 +1,66 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap');
+* {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	color: #333333;
+	text-decoration: none;
+	font-family: 'Noto Sans KR', sans-serif;
+	vertical-align: baseline;
+	box-sizing: border-box;
+}
+html, body {
+	height: 100%;
+	min-width: 320px;
+}
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+	background-color: #FFF3D5;
+}
+ol, ul, li {
+	list-style: none;
+}
+button {
+	border: none;
+	background-color: transparent;
+	text-align: left;
+	padding: 0;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after, q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+input::-webkit-input-placeholder {
+	color: #999;
+}
+input:-ms-input-placeholder {
+	color: #999;
+}
+textarea::-webkit-input-placeholder {
+	color: #999;
+}
+textarea:-ms-input-placeholder {
+	color: #999;
+}
+input::placeholder {
+	color: #999;
+}
+textarea::placeholder {
+	color: #999;
+}
+select {
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	background: url(../img/arrow_down.svg) no-repeat center right 10px;
+}

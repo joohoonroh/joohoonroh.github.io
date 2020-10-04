@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<link rel="stylesheet" href="../css/reset.css" />
+	<link rel="stylesheet" href="../css/common.css" />
+	<title>QuizKids</title>
+</head>
+<body>
+	<div class="App">
+		<header class="header">
+			<div class="headerLeft">
+				<button class="headerIcon hideText" onclick="historyBack()" style="background-image: url(../img/arrow_left.svg)">뒤로가기</button>
+			</div>
+			<div class="headerCenter">
+				<h1 class="headerTitle">
+					회원가입
+				</h1>
+			</div>
+			<div class="headerRight">
+				<div class="headerLogo">
+<!--					<div class="headerLogoPoint">-->
+<!--						1280p-->
+<!--					</div>-->
+				</div>
+			</div>
+		</header>
+		<div class="container">
+			<div class="inputWrap">
+				<div class="inputTitle">약관동의</div>
+				<div class="inputAgreeBox">
+					<button class="inputAgreeAll is_impotent">
+						전체 동의하기
+					</button>
+					<div class="inputAgreeList">
+						<li class="inputAgreeItem">
+							<input class="inputAgree is_impotent" type="checkbox" id="0_0"><label for="0_0">(필수) 만 14세 이상</label>
+						</li>
+						<li class="inputAgreeItem">
+							<input class="inputAgree is_impotent" type="checkbox" id="0_1"><label for="0_1">(필수) 키즈퀴즈 이용약관 동의</label>
+						</li>
+						<li class="inputAgreeItem">
+							<input class="inputAgree is_impotent" type="checkbox" id="0_2"><label for="0_2">(필수) 개인정보 처리방침 동의</label>
+						</li>
+						<li class="inputAgreeItem">
+							<input class="inputAgree" type="checkbox" id="0_3"><label for="0_3">(선택) 이벤트 알림 수신</label>
+						</li>
+					</div>
+				</div>
+			</div>
+			<div class="inputWrap">
+				<div class="inputTitle">*이메일</div>
+				<input class="flatInput is_impotent" type="email" placeholder="이메일">
+			</div>
+			<div class="inputWrap">
+				<div class="inputTitle">*비밀번호</div>
+				<input class="flatInput is_impotent" type="password" placeholder="비밀번호">
+			</div>
+			<div class="inputWrap is_change">
+				<div class="inputTitle">*휴대폰 번호</div>
+				<input class="flatInput is_num is_impotent" type="tel" placeholder="휴대폰 번호 입력 ('-'제외)">
+				<button class="flatInput is_on is_fix">인증요청</button>
+				<button class="flatInput is_off is_fix is_nowrap" style="width: 100px;">인증번호 재발송</button>
+				<div class="flatInputInner is_off">
+					<input class="flatInput is_num is_impotent" type="tel" required="required" autocomplete="off" maxlength="11" placeholder="인증번호 입력">
+					<div class="flatInputTimer">02:58</div>
+				</div>
+				<div class="inputUnderWrap">
+					<ul class="inputUnderInfo">
+						<li>※ 본인 명의의 휴대폰 정보를 정확히 입력해 주시기 바랍니다.</li>
+						<li>※ 휴대폰 로그인의 경우, 해외 번호는 이용이 불가능하니 양해 바랍니다.</li>
+						<li>※ 다인의 명의를 도용하여 부정인증을 시도한 경우, 관련 법령에 따라 처벌(3년 이하의 징역 또는 1천만원 이하의 벌금)을 받을 수 있습니다.</li>
+					</ul>
+				</div>
+			</div>
+			<button class="boxButton">회원가입 완료</button>
+		</div>
+	</div>
+	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+	<script type="text/javascript" src="../js/common.js"></script>
+	<script>
+	
+	</script>
+</body>
+</html>
